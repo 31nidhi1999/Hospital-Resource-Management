@@ -1,7 +1,5 @@
 package com.hrms.entity;
 
-import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,14 +22,14 @@ public class Patient extends User {
 	
 	@ManyToOne
 	@JoinColumn(name="doctor_id")
-	private List<Doctor> doctors;
+	private Doctor doctor;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Admission> admissions;
+	@OneToOne
+	private Admission admission;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Treatment> treatments;
+	@OneToOne
+	private Treatment treatments;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Resource> resources;
+	@OneToOne
+	private Resource resources;
 }

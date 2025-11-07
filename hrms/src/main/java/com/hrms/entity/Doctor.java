@@ -1,5 +1,6 @@
 package com.hrms.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -23,11 +24,11 @@ public class Doctor extends User {
 	private String specialization;
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-	private List<Patient> patients;
+	private List<Patient> patients = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-	private List<ResourceRequest> requests;
+	private List<ResourceRequest> requests = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-	private List<Schedule> schedules;
+	private List<Schedule> schedules = new ArrayList<>();
 }

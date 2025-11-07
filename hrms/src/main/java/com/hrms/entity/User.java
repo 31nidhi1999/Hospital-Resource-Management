@@ -40,7 +40,7 @@ public class User {
 	private LocalDateTime updatedAt;
 	
 	private String firstName;
-	private String secondName;
+	private String lastName;
 	
 	@Column(unique = true, nullable = false)
 	private String email;
