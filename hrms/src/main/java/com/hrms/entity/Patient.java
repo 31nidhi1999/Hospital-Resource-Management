@@ -22,6 +22,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Patient extends User {
 	
+	private Integer age;
+	
+	private String address;
+	
 	@ManyToOne
 	@JoinColumn(name="doctor_id")
 	private List<Doctor> doctors;
