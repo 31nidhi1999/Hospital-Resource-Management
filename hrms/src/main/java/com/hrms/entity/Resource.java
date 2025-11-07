@@ -1,5 +1,6 @@
 package com.hrms.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -40,11 +41,11 @@ public class Resource {
 	
 	@ManyToOne
 	@JoinColumn(name="admin_id")
-	private List<Admin> administrators;
+	private Admin admin;
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<ResourceRequest> resourceRequests;
+	private List<ResourceRequest> resourceRequests = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Patient> patients;
+	private List<Patient> patients = new ArrayList<>();
 }

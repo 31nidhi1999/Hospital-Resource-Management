@@ -1,5 +1,6 @@
 package com.hrms.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -21,8 +22,8 @@ import lombok.Setter;
 public class Admin extends User {
 	
 	@OneToMany(mappedBy = "admin",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Resource> resources;
+	private List<Resource> resources = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "admin",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Report> reports;
+	private List<Report> reports = new ArrayList<>();
 }
