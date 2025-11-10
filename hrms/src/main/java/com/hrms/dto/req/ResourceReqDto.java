@@ -11,4 +11,5 @@ public class ResourceReqDto {
 	private String resourceName;
 	private ResourceType resourceType;
 	private Long admin_id;
+	
 }

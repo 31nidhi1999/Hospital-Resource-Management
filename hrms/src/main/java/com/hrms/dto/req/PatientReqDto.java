@@ -4,7 +4,13 @@ import com.hrms.entity.Role;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
 public class PatientReqDto {
 	@NotNull(message = "First Name Required")
 	private String firstName;

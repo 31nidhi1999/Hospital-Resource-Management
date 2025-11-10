@@ -13,5 +13,6 @@ public interface DoctorDao {
 	DoctorResDto registerDoctor(DoctorReqDto dto);
 	DoctorResDto updateDoctor(Long docId, DoctorReqDto dto);
 	List<DoctorResDto> listAll();
-	List<DoctorResDto> listAllActive();
+	void deleteDoctor(Long id);
+	DoctorResDto getDoctorById(Long id);
 }

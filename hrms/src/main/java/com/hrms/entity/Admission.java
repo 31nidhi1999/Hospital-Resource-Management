@@ -46,4 +46,6 @@ public class Admission {
 	@ManyToOne
 	@JoinColumn(name="resource_id")
 	private Resource resource;
+	
+	private boolean isActive=true;
 }
