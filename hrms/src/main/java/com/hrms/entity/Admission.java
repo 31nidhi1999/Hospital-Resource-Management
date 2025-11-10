@@ -39,7 +39,7 @@ public class Admission {
 	@JoinColumn(name="patient_id")
 	private Patient patient;
 	
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
 	
