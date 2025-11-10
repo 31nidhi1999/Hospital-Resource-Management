@@ -43,7 +43,9 @@ public class ResourceDaoImpl implements ResourceDao {
 		Admin admin = adminRepo.findById(adminId)
 		.orElseThrow(()-> new ResourceNotFoundException("Admin not found for id " +  adminId));
 		
+		
 		Resource resource = modelMapper.map(dto, Resource.class);
+		admin.getResources().add(resource);
 		
 		Resource savedResource = resourceRepo.save(resource);
 		log.info("Resource registered successfully with ID: ", savedResource.getId());

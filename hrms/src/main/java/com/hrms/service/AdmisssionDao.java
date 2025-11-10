@@ -6,9 +6,9 @@ import com.hrms.dto.req.AdmissionReqDto;
 import com.hrms.dto.res.AdmissionResDto;
 
 public interface AdmisssionDao {
-	List<AdmissionResDto> getAllAdmission();
+	List<AdmissionResDto> listAllAdmission();
 	AdmissionResDto getAdmissionById(long id);
-	AdmissionResDto registerAdmission(AdmissionReqDto dto);
+	AdmissionResDto admidPatient(AdmissionReqDto dto);
 	AdmissionResDto updateAdmission(Long id, AdmissionReqDto dto);
-	void deleteAdmission(Long id);
+	void dischargePatient(Long id);
 }
