@@ -50,4 +50,6 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	private boolean isActive=true;
 }
