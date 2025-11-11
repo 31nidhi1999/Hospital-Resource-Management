@@ -120,12 +120,12 @@ public class TreatmentDaoImpl implements TreatmentDao {
 
 	@Override
 	public void deleteTreatment(Long id) {
-		log.info("Deleting treatment with ID: {}", id);
+		log.info("Deleting treatment with ID: ", id);
 		
         Treatment treatment = treatmentRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Treatment not found with ID: " + id));
         treatmentRepo.delete(treatment);
-        log.info("Treatment deleted successfully with ID: {}", id);
+        log.info("Treatment deleted successfully with ID: ", id);
 		
 	}
 }
