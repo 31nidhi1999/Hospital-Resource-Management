@@ -135,7 +135,8 @@ public class ResourceDaoImpl implements ResourceDao {
 	public void updateTotalQuantity(Long resId, int newTotalQuantity) {
 		log.info("Updating total quantity for resource ID: ", resId);
 		
-		Resource resource = resourceRepo.findById(resId).orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + resId));
+		Resource resource = resourceRepo.findById(resId)
+				.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + resId));
 		
 		 if (newTotalQuantity < resource.getAvailableQuantity()) {
 	            throw new ApiException("Total quantity cannot be less than available quantity");

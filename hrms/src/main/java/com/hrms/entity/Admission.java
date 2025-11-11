@@ -33,7 +33,7 @@ public class Admission {
 	@CreationTimestamp
 	private LocalDateTime admissionDate;
 	
-	private LocalDateTime dischargeDate;
+	private LocalDateTime dischargeDate = null;
 	
 	@OneToOne
 	@JoinColumn(name="patient_id")
