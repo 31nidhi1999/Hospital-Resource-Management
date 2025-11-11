@@ -3,6 +3,8 @@ package com.hrms.entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +31,8 @@ public class Schedule {
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
 	
-	private String shiftType;
+	@Enumerated(EnumType.STRING)
+	private ShiftType shiftType;
 	
 	@ManyToOne
 	@JoinColumn(name="doctor_id")

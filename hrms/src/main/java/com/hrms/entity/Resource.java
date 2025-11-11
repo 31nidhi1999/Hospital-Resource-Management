@@ -37,7 +37,11 @@ public class Resource {
 	@Enumerated(EnumType.STRING)
 	private ResourceType resourceType;
 	
-	private boolean available = true;
+    private int totalQuantity;
+    
+    private int availableQuantity;
+	
+	private boolean isAvailable = true;
 	
 	@ManyToOne
 	@JoinColumn(name="admin_id")

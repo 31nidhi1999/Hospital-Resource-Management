@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.DoctorReqDto;
 import com.hrms.dto.res.DoctorResDto;
 import com.hrms.entity.Doctor;
@@ -84,24 +85,30 @@ public class DoctorDaoImpl implements DoctorDao {
 	}
 
 	@Override
-	public List<DoctorResDto> listAllActive() {
-		log.info("Fetching all active doctors...");
+	public void deleteDoctor(Long id) {
+	    log.info("Request received to delete (soft delete) doctor with ID: {}", id);
 
-        List<DoctorResDto> activeDoctors = doctorRepo.findAll()
-                .stream()
-                .filter(Doctor::isActive)
-                .map(d -> modelMapper.map(d, DoctorResDto.class))
-                .collect(Collectors.toList());
+	    Doctor doctor = doctorRepo.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id " + id));
 
-        log.debug("Number of active doctors found: ", activeDoctors.size());
+	    log.debug("Doctor found for deletion. ID: {}, Email: {}", id, doctor.getEmail());
 
-        if (activeDoctors.isEmpty()) {
-        	log.warn("No active doctors found in the system!");
-        } else {
-        	log.info("Successfully fetched  active doctors List.", activeDoctors.size());
-        }
+	    doctor.setActive(false);
+	    doctorRepo.save(doctor);
 
-        return activeDoctors;
+	    log.info("Doctor with ID:  has been soft deleted successfully.", id);
 	}
 
+
+	@Override
+	public DoctorResDto getDoctorById(Long id) {
+		log.info("Fetching doctor with ID: ", id);
+
+		Doctor doctor = doctorRepo.findById(id)
+		        .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id " + id));
+
+		log.debug("Doctor found: ID = , Doctor Email = ", id, doctor.getEmail());
+
+		return modelMapper.map(doctor, DoctorResDto.class);
+	}
 }
