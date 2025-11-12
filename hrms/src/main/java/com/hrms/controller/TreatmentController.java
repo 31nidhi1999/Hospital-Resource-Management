@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,18 +35,18 @@ public class TreatmentController {
 		return null;
 	}
 	
-	@GetMapping("{/treId}")
-	public ResponseEntity<?> getTreatmentById(@Valid Long treId){
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getTreatmentById(@PathVariable Long id){
 		return null;
 	}
 	
-	@PutMapping("{/treId}")
-	public ResponseEntity<?> updateTreatment(@Valid Long treId, @Valid @RequestBody TreatmentReqDto dto){
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateTreatment(@PathVariable Long id, @Valid @RequestBody TreatmentReqDto dto){
 		return null;
 	}
 	
-	@DeleteMapping("{/treId}")
-	public ResponseEntity<?> deleteTreatmentById(@Valid Long treId){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteTreatmentById(@PathVariable Long id){
 		return null;
 	}
 }
