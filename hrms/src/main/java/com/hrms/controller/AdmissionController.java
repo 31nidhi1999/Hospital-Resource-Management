@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,18 +35,18 @@ public class AdmissionController {
 		return null;
 	}
 	
-	@GetMapping("{/adId}")
-	public ResponseEntity<?> getAdmissionById(@Valid Long adId){
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getAdmissionById(@PathVariable Long id){
 		return null;
 	}
 	
-	@PutMapping("{/adId}")
-	public ResponseEntity<?> updateAdmission(@Valid Long adId, @Valid @RequestBody AdmissionReqDto dto){
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateAdmission(@PathVariable Long id, @Valid @RequestBody AdmissionReqDto dto){
 		return null;
 	}
 	
-	@DeleteMapping("{/patId}")
-	public ResponseEntity<?> dischargePatient(@Valid Long patId){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> dischargePatient(@PathVariable Long id){
 		return null;
 	}
 }
