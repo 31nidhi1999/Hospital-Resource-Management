@@ -79,7 +79,7 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 	}
 
 	@Override
-	public AdmissionResDto admidPatient(AdmissionReqDto dto) {
+	public AdmissionResDto admitPatient(AdmissionReqDto dto) {
 		log.info("Admitting new patient with ID: ", dto.getPatientId());
 		
 		Patient patient = patientRepo.findById(dto.getPatientId())
