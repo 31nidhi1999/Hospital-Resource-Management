@@ -117,7 +117,7 @@ public class ResourceRequestDaoImpl implements ResourceRequestDao {
 		
 		log.info("Resource request created successfully with ID: {}", savedRequest.getId());
 		
-		return modelMapper.map(resource, ResourceRequestResDto.class);
+		return modelMapper.map(savedRequest, ResourceRequestResDto.class);
 	}
 
 	@Override
