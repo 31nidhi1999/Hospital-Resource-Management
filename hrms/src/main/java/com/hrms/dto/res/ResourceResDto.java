@@ -11,6 +11,7 @@ public class ResourceResDto {
 	private Long id;
 	private String resourceName;
 	private ResourceType resourceType;
-	private Boolean active;
-	private Long adminId;
+	private Boolean isAvailable;
+	private Integer totalQuantity;
+	private Integer availableQuantity;
 }

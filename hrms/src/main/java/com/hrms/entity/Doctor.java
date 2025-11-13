@@ -32,9 +32,6 @@ public class Doctor extends User {
     private boolean isApproved = false;
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-	private List<Patient> patients = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 	private List<ResourceRequest> requests = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)

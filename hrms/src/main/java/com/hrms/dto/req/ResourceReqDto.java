@@ -1,5 +1,7 @@
 package com.hrms.dto.req;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hrms.entity.ResourceType;
 
 import lombok.Getter;
@@ -10,5 +12,7 @@ import lombok.Setter;
 public class ResourceReqDto {
 	private String resourceName;
 	private ResourceType resourceType;
-	private Long admin_id;
+	private Integer totalQuantity;
+	@JsonProperty(access = Access.READ_ONLY)
+	private Integer availableQuantity;
 }

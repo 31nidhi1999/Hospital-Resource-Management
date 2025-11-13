@@ -34,14 +34,15 @@ public class PatientController {
 	private PatientDao patientDao;
 	
 	@PostMapping
-	public ResponseEntity<PatientResDto> registerPatient(@Valid @RequestBody PatientReqDto dto){
+	public ResponseEntity<ApiResponse> registerPatient(@Valid @RequestBody PatientReqDto dto){
 		 log.info("Request received to create patient: {}", dto);
 		 
-		 PatientResDto registerDoctor = patientDao.registerPatient(dto);
+		 PatientResDto registerPatient = patientDao.registerPatient(dto);
 		 
-		 log.info("Patient created successfully with ID: ", registerDoctor.getId());
+		 log.info("Patient created successfully with ID: ", registerPatient.getId());
 		 
-		return ResponseEntity.ok(registerDoctor);
+		return ResponseEntity
+				.ok(new ApiResponse("Patient Register successfully: ID : " + registerPatient.getId() +" Email : " +  registerPatient.getEmail()));
 	}
 	
 	@GetMapping
@@ -63,12 +64,13 @@ public class PatientController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<PatientResDto> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientReqDto dto){
+	public ResponseEntity<ApiResponse> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientReqDto dto){
 		log.info("Updating patient with ID: {}", id);
 		
 		PatientResDto patientResDto = patientDao.updatePatient(id, dto);
 		
-		return ResponseEntity.ok(patientResDto);
+		return ResponseEntity
+				.ok(new ApiResponse("Patient Register successfully: ID : " + patientResDto.getId() +" Email : " +  patientResDto.getEmail()));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -78,6 +80,6 @@ public class PatientController {
 		patientDao.deletePatient(id);
 		
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(new ApiResponse("Patient deleted successfully" + id));
+				.body(new ApiResponse("Patient deleted successfully " + id));
 	}
 }

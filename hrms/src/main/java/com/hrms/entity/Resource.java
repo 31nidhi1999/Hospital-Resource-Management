@@ -37,15 +37,11 @@ public class Resource {
 	@Enumerated(EnumType.STRING)
 	private ResourceType resourceType;
 	
-    private int totalQuantity;
+    private Integer totalQuantity;
     
-    private int availableQuantity;
+    private Integer availableQuantity;
 	
-	private boolean isAvailable = true;
-	
-	@ManyToOne
-	@JoinColumn(name="admin_id")
-	private Admin admin;
+	private Boolean isAvailable = true;
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
 	private List<ResourceRequest> resourceRequests = new ArrayList<>();

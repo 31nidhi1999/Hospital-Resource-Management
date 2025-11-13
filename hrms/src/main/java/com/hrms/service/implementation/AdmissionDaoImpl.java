@@ -95,7 +95,7 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 		Resource resource = resourceRepo.findById(dto.getResourceId())
 							.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + dto.getResourceId()));	
 		
-		if(!resource.isAvailable() || resource.getAvailableQuantity() <=0) {
+		if(!resource.getIsAvailable() || resource.getAvailableQuantity() <=0) {
 			throw new ApiException("Resource is not available for admission.");
 		}
 		
@@ -128,7 +128,7 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 		
 		Resource resource = admission.getResource();
 		resource.setAvailableQuantity(resource.getAvailableQuantity() + 1);
-		resource.setAvailable(true);
+		resource.setIsAvailable(true);
 		
 		resourceRepo.save(resource);
 		
