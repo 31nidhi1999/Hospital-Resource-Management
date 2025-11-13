@@ -1,6 +1,9 @@
 package com.hrms.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,40 +16,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hrms.dto.req.AdmissionReqDto;
+import com.hrms.dto.res.AdmissionResDto;
+import com.hrms.dto.res.ApiResponse;
+import com.hrms.dto.res.DoctorResDto;
 import com.hrms.service.AdmisssionDao;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/admissions")
 @CrossOrigin
+@Slf4j
 public class AdmissionController {
 	
 	@Autowired
 	private AdmisssionDao admisssionDao;
 
 	@PostMapping
-	public ResponseEntity<?> admitPatient(@Valid @RequestBody AdmissionReqDto dto){
-		return null;
+	public ResponseEntity<AdmissionResDto> admitPatient(@Valid @RequestBody AdmissionReqDto dto){
+		 log.info("Request received to admit patient: {}", dto);
+		 AdmissionResDto admissionResDto = admisssionDao.admitPatient(dto);
+		 log.info("Patient admited  successfully with admission ID: ", admissionResDto.getId());
+		return ResponseEntity.ok(admissionResDto);
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> getAllAdmission(){
-		return null;
+	public ResponseEntity<List<AdmissionResDto>> getAllAdmission(){
+		log.info("Fetching all admission ...");
+		 List<AdmissionResDto> listAll = admisssionDao.listAllAdmission();
+		return ResponseEntity.ok(listAll);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getAdmissionById(@PathVariable Long id){
-		return null;
+		log.info("Fetching admission with ID: {}", id);
+		AdmissionResDto admissionResDto = admisssionDao.getAdmissionById(id);
+		return ResponseEntity.ok(admissionResDto);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateAdmission(@PathVariable Long id, @Valid @RequestBody AdmissionReqDto dto){
-		return null;
+	public ResponseEntity<AdmissionResDto> updateAdmission(@PathVariable Long id, @Valid @RequestBody AdmissionReqDto dto){
+		log.info("Updating admission with ID: {}", id);
+		 AdmissionResDto updateAdmission = admisssionDao.updateAdmission(id, dto);
+		return ResponseEntity.ok(updateAdmission);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> dischargePatient(@PathVariable Long id){
-		return null;
+		log.info("Deleting doctor with ID: {}", id);
+		admisssionDao.dischargePatient(id);
+		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Patient discharge successfully" + id));
 	}
 }
