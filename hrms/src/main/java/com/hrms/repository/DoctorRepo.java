@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface DoctorRepo extends JpaRepository<Doctor, Long> {
 	Doctor findByEmail(String email);
+	List<Doctor> findByIsActiveTrue();
 }

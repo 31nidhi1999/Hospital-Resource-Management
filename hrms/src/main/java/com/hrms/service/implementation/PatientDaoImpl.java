@@ -71,12 +71,15 @@ public class PatientDaoImpl implements PatientDao {
 	@Override
 	public PatientResDto updatePatient(Long patId, PatientReqDto dto) {
 		log.info("Updating patient with ID: ", patId);
+		
+		Patient patient = patientRepo.findById(patId)
+	    		.orElseThrow(()-> new ResourceNotFoundException("Patient not found by id" + patId));
 		 
-		Patient patient = modelMapper.map(dto, Patient.class);
-		log.debug("Mapped PatientReqDto to Doctor entity for ID: ", patId);
+		modelMapper.map(dto, patient);
+		log.debug("Mapped PatientReqDto to existing Patient entity for ID: ", patId);
 		
 		Patient savedPatient = patientRepo.save(patient);
-		log.debug("Patient entity saved successfully with ID: ", savedPatient.getId());
+		log.debug("Patient updated entity saved successfully with ID: ", savedPatient.getId());
 		
 		PatientResDto patientResDto = modelMapper.map(savedPatient, PatientResDto.class);
 		 log.info("Patient updated successfully: ID = , email = ", 
@@ -90,7 +93,7 @@ public class PatientDaoImpl implements PatientDao {
 		log.info("Request received to delete (soft delete) patient with ID: {}", id);
 
 	    Patient patient = patientRepo.findById(id)
-	    		.orElseThrow(()-> new ResourceNotFoundException("Patient not found by id" + id));
+	    		.orElseThrow(()-> new ResourceNotFoundException("Patient not found by id : " + id));
 
 	    log.debug("Patient found for deletion. ID: {}, Email: {}", id, patient.getEmail());
 

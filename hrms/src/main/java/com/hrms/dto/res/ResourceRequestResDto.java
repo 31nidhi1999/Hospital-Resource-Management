@@ -15,11 +15,13 @@ public class ResourceRequestResDto {
     private RequestStatus status;
 
     private Long doctorId;
-    private String doctorName;
+    private String doctorFirstName;
 
     private Long patientId;
-    private String patientName;
+    private String patientFirstName;
 
     private Long resourceId;
     private String resourceName;
+    
+    private Long admissionId;
 }

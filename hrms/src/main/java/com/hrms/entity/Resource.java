@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,24 +34,19 @@ public class Resource {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	private String resourceName;
 	
 	@Enumerated(EnumType.STRING)
 	private ResourceType resourceType;
 	
-    private int totalQuantity;
+	@NotNull
+    private Integer totalQuantity;
     
-    private int availableQuantity;
+    private Integer availableQuantity;
 	
-	private boolean isAvailable = true;
-	
-	@ManyToOne
-	@JoinColumn(name="admin_id")
-	private Admin admin;
+	private Boolean isAvailable = true;
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
 	private List<ResourceRequest> resourceRequests = new ArrayList<>();
-	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Patient> patients = new ArrayList<>();
 }

@@ -31,5 +31,5 @@ public class Report {
 	
 	@ManyToOne
 	@JoinColumn(name="report_id")
-	private Admin admin;
+	private User admin;
 }

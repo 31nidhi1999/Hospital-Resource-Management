@@ -12,9 +12,9 @@ import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.ResourceReqDto;
 import com.hrms.dto.res.PatientResDto;
 import com.hrms.dto.res.ResourceResDto;
-import com.hrms.entity.Admin;
 import com.hrms.entity.Patient;
 import com.hrms.entity.Resource;
+import com.hrms.entity.User;
 import com.hrms.repository.AdminRepo;
 import com.hrms.repository.ResourceRepo;
 import com.hrms.service.ResourceDao;
@@ -37,15 +37,14 @@ public class ResourceDaoImpl implements ResourceDao {
 	private ModelMapper modelMapper;
 
 	@Override
-	public ResourceResDto registerResource(Long adminId,ResourceReqDto dto) {
+	public ResourceResDto registerResource(ResourceReqDto dto) {
 		log.info("Registering new resource: ", dto.getResourceName());
 		
-		Admin admin = adminRepo.findById(adminId)
-		.orElseThrow(()-> new ResourceNotFoundException("Admin not found for id " +  adminId));
+		if (dto.getAvailableQuantity() == null) 
+		    dto.setAvailableQuantity(dto.getTotalQuantity());
 		
 		
 		Resource resource = modelMapper.map(dto, Resource.class);
-		admin.getResources().add(resource);
 		
 		Resource savedResource = resourceRepo.save(resource);
 		log.info("Resource registered successfully with ID: ", savedResource.getId());
@@ -60,8 +59,21 @@ public class ResourceDaoImpl implements ResourceDao {
 		Resource resource = resourceRepo.findById(resId)
 										.orElseThrow(()-> new ResourceNotFoundException("Resource not found for id " + resId));
 		
-		Resource resource2 = modelMapper.map(dto, Resource.class);
-		Resource upatedResource = resourceRepo.save(resource2);
+		Integer oldAvailable = resource.getAvailableQuantity();
+	    Integer oldTotal = resource.getTotalQuantity();
+		modelMapper.getConfiguration().setSkipNullEnabled(true);
+	    modelMapper.map(dto, resource);
+	  
+	    if (dto.getTotalQuantity() != null && dto.getTotalQuantity() != oldTotal) {
+	        int diff = dto.getTotalQuantity() - oldAvailable;
+	        int newAvailable = oldAvailable + diff;
+	        
+	        if (newAvailable < 0) newAvailable = 0;
+	        if (newAvailable > resource.getTotalQuantity()) newAvailable = resource.getTotalQuantity();
+	        
+	        resource.setAvailableQuantity(newAvailable);
+	    }
+		Resource upatedResource = resourceRepo.save(resource);
 		log.info("Resource updated successfully with ID: ", upatedResource.getId());
 		
 		return modelMapper.map(upatedResource, ResourceResDto.class);
@@ -96,6 +108,7 @@ public class ResourceDaoImpl implements ResourceDao {
 
 	    log.debug("Resource found for deletion. ID: , Resource Name: ", id, resource.getResourceName());
 
+	    resource.setIsAvailable(false);
 	    resourceRepo.save(resource);
 
 	    log.info("Resource with ID:  has been soft deleted successfully.", id);
@@ -112,23 +125,6 @@ public class ResourceDaoImpl implements ResourceDao {
 		log.debug("Resource found: ID = ,Resource Name = ", id, resource.getResourceName());
 		
 		return modelMapper.map(resource, ResourceResDto.class);
-	}
-
-	@Override
-	public void updateAvailableQuantity(Long resId, int newAvailableQuantity) {
-		 log.info("Updating available quantity for resource ID: ", resId);
-		 
-		 Resource resource = resourceRepo.findById(resId)
-		 .orElseThrow(()-> new ResourceNotFoundException("Resource not found for id " + resId));
-		 
-		 if(newAvailableQuantity > resource.getTotalQuantity()) {
-			 throw new ApiException("Available quantity cannot exceed total quantity");
-		 }
-		 
-		 resource.setAvailableQuantity(newAvailableQuantity);
-		 resourceRepo.save(resource);
-		 
-		 log.info("Available quantity updated successfully for resource ID: {}", resId);
 	}
 
 	@Override

@@ -11,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,19 +32,15 @@ public class Admission {
 	@CreationTimestamp
 	private LocalDateTime admissionDate;
 	
-	private LocalDateTime dischargeDate = null;
+	private LocalDateTime dischargeDate;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="patient_id")
 	private Patient patient;
 	
 	@ManyToOne
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
-	
-	@ManyToOne
-	@JoinColumn(name="resource_id")
-	private Resource resource;
 	
 	private boolean isActive=true;
 }

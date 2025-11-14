@@ -7,5 +7,5 @@ import com.hrms.entity.Resource;
 
 @Repository
 public interface ResourceRepo extends JpaRepository<Resource, Long> {
-
+	
 }

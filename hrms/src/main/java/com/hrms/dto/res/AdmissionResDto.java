@@ -12,11 +12,9 @@ public class AdmissionResDto {
     private LocalDateTime dischargeDate;
 
     private Long patientId;
-    private String patientName;
+    private String patientFirstName;
 
     private Long doctorId;
-    private String doctorName;
+    private String doctorFirstName;
 
-    private Long resourceId;
-    private String resourceName; 
 }

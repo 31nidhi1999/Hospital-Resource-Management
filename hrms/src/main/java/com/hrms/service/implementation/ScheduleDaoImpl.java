@@ -1,5 +1,6 @@
 package com.hrms.service.implementation;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hrms.custom_exceptions.ResourceNotFoundException;
-import com.hrms.dto.req.ScheduleReqDto;
 import com.hrms.dto.res.ScheduleResDto;
 import com.hrms.entity.Doctor;
 import com.hrms.entity.Schedule;
+import com.hrms.helper.ScheduleHelper;
 import com.hrms.repository.DoctorRepo;
 import com.hrms.repository.ScheduleRepo;
 import com.hrms.service.ScheduleDao;
@@ -33,52 +34,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	@Autowired
 	private DoctorRepo doctorRepo;
 	
-	@Override
-	public ScheduleResDto createSchedule(ScheduleReqDto dto) {
-		log.info("Creating schedule for Doctor ID: {}", dto.getDoctorId());
-		
-		Doctor doctor = doctorRepo.findById(dto.getDoctorId())
-				.orElseThrow(()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctorId()));
-		
-		Schedule schedule = modelMapper.map(dto, Schedule.class);
-		
-		schedule.setDoctor(doctor);
-		Schedule savedSchedule = scheduleRepo.save(schedule);
-		
-		log.info("Schedule created successfully for Doctor: {}", doctor.getEmail());
-		
-		return modelMapper.map(savedSchedule, ScheduleResDto.class);
-	}
-
-	@Override
-	public ScheduleResDto updateSchedule(Long id, ScheduleReqDto dto) {
-		log.info("Updating schedule with ID: {}", id);
-		
-		Schedule schedule = scheduleRepo.findById(id)
-			.orElseThrow(()-> new ResourceNotFoundException("Schedule not found for ID: " + dto.getDoctorId()));
-		
-		Doctor doctor = doctorRepo.findById(dto.getDoctorId())
-			.orElseThrow(()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctorId()));
-		
-		Schedule schedule2 = modelMapper.map(schedule, Schedule.class);
-		Schedule savedSchedule = scheduleRepo.save(schedule2);
-		
-		log.info("Schedule updated successfully.");
-		return modelMapper.map(savedSchedule, ScheduleResDto.class);
-	}
-
-	@Override
-	public void deleteSchedule(Long id) {
-		log.info("Deleting schedule with ID: {}", id);
-		
-        Schedule schedule = scheduleRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found for ID: " + id));
-        
-        scheduleRepo.delete(schedule);
-        
-        log.info("Schedule deleted successfully.");
-		
-	}
+	@Autowired
+	private ScheduleHelper helper;
 
 	@Override
 	public List<ScheduleResDto> getSchedulesByDoctor(Long doctorId) {
@@ -120,5 +77,25 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		
 		return allSchedule;
 	}
+
+	public void generateNextMonthSchedule() {
+		List<Doctor> activeDoctors = doctorRepo.findByIsActiveTrue();
+		if (activeDoctors.isEmpty()) {
+		log.warn("No active doctors found - skipping schedule generation");
+		return;
+		}
+
+		LocalDate nextMonth = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		int daysInMonth = nextMonth.lengthOfMonth();
+
+		for (int day = 1; day <= daysInMonth; day++) {
+		LocalDate date = nextMonth.withDayOfMonth(day);
+		List<Schedule> schedulesForDay = helper.buildSchedulesForDate(date, activeDoctors);
+		scheduleRepo.saveAll(schedulesForDay);
+		}
+
+
+		log.info("Generated schedules for {} doctors for month {}", activeDoctors.size(), nextMonth.getMonth());
+		}
 
 }

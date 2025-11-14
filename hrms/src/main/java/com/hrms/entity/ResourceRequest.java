@@ -45,4 +45,9 @@ public class ResourceRequest {
 	@ManyToOne
 	@JoinColumn(name="resource_id")
 	private Resource resource;
+	
+	 @ManyToOne
+	    @JoinColumn(name = "admission_id")
+	    private Admission admission;
+	
 }

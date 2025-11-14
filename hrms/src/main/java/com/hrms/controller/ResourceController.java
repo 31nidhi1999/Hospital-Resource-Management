@@ -33,15 +33,16 @@ public class ResourceController {
 	@Autowired
 	private ResourceDao resourceDao;
 	
-	@PostMapping("/{id}")
-	public ResponseEntity<ResourceResDto> registerResource(@PathVariable Long id ,@Valid @RequestBody ResourceReqDto dto){
+	@PostMapping
+	public ResponseEntity<ApiResponse> registerResource(@Valid @RequestBody ResourceReqDto dto){
 		log.info("Request received to create patient: {}", dto);
 		 
-		 ResourceResDto resourceResDto = resourceDao.registerResource(id, dto);
+		 ResourceResDto resourceResDto = resourceDao.registerResource( dto);
 		 
 		 log.info("Patient created successfully with ID: ", resourceResDto.getId());
 		 
-		return ResponseEntity.ok(resourceResDto);
+		 return ResponseEntity
+					.ok(new ApiResponse("Resource Register successfully, ID : " + resourceResDto.getId()));
 	}
 	
 	@GetMapping
@@ -63,12 +64,13 @@ public class ResourceController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateResource(@PathVariable Long id, @Valid @RequestBody ResourceReqDto dto){
+	public ResponseEntity<ApiResponse> updateResource(@PathVariable Long id, @Valid @RequestBody ResourceReqDto dto){
 		log.info("Updating patient with ID: {}", id);
 		
 		ResourceResDto resourceResDto = resourceDao.updateResource(id, dto);
 		
-		return ResponseEntity.ok(resourceResDto);
+		return ResponseEntity
+				.ok(new ApiResponse("Resource Update successfully, ID : " + resourceResDto.getId()));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -80,4 +82,17 @@ public class ResourceController {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse("Resource deleted successfully" + id));
 	}
+	
+	
+	@PutMapping("/{resId}/total/{newTotalQuantity}")
+    public ResponseEntity<ApiResponse> updateTotalQuantity(
+            @PathVariable Long resId,
+            @PathVariable int newTotalQuantity) {
+
+        log.info("Received request to update total quantity for resource ID: {}", resId);
+
+        resourceDao.updateTotalQuantity(resId, newTotalQuantity);
+
+        return ResponseEntity.ok((new ApiResponse("Total quantity updated successfully for resource ID: " + resId)));
+    }
 }

@@ -50,8 +50,11 @@ public class DoctorDaoImpl implements DoctorDao {
 	@Override
 	public DoctorResDto updateDoctor(Long docId,DoctorReqDto dto) {
 		log.info("Updating doctor with ID: ", docId);
+		
+		Doctor doctor = doctorRepo.findById(docId)
+	            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id : " + docId));
 		 
-		Doctor doctor = modelMapper.map(dto, Doctor.class);
+		modelMapper.map(dto, doctor);
 		log.debug("Mapped DoctorReqDto to Doctor entity for ID: ", docId);
 		
 		Doctor savedDoctor = doctorRepo.save(doctor);
@@ -89,7 +92,7 @@ public class DoctorDaoImpl implements DoctorDao {
 	    log.info("Request received to delete (soft delete) doctor with ID: {}", id);
 
 	    Doctor doctor = doctorRepo.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id " + id));
+	            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id : " + id));
 
 	    log.debug("Doctor found for deletion. ID: {}, Email: {}", id, doctor.getEmail());
 

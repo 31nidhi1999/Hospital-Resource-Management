@@ -1,5 +1,6 @@
 package com.hrms.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,14 +14,18 @@ import com.hrms.dto.req.ResourceRequestReqDto;
 import com.hrms.dto.res.ResourceRequestResDto;
 import com.hrms.dto.res.ResourceResDto;
 import com.hrms.dto.res.TreatmentResDto;
+import com.hrms.entity.Admission;
 import com.hrms.entity.Doctor;
 import com.hrms.entity.Patient;
 import com.hrms.entity.RequestStatus;
 import com.hrms.entity.Resource;
+import com.hrms.entity.ResourceAllocation;
 import com.hrms.entity.ResourceRequest;
 import com.hrms.entity.Treatment;
+import com.hrms.repository.AdmissionRepo;
 import com.hrms.repository.DoctorRepo;
 import com.hrms.repository.PatientRepo;
+import com.hrms.repository.ResourceAllocationRepo;
 import com.hrms.repository.ResourceRepo;
 import com.hrms.repository.ResourceRequestRepo;
 import com.hrms.service.ResourceRequestDao;
@@ -46,25 +51,37 @@ public class ResourceRequestDaoImpl implements ResourceRequestDao {
 	private ResourceRepo resourceRepo;
 	
 	@Autowired
+	private AdmissionRepo admissionRepo;
+	
+	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private ResourceAllocationRepo allocationRepo;
 
 	@Override
 	public ResourceRequestResDto createRequest(ResourceRequestReqDto dto) {
-		log.info("Creating new resource request for doctor ID: {}", dto.getDoctorId());
+		log.info("Creating new resource request for doctor ID: {}", dto.getDoctor_id());
 		
-		Patient patient = patientRepo.findById(dto.getPatientId())
-				.orElseThrow(()-> new ResourceNotFoundException("Patient not found for ID: " + dto.getPatientId()));
+		Patient patient = patientRepo.findById(dto.getPatient_id())
+				.orElseThrow(()-> new ResourceNotFoundException("Patient not found for ID: " + dto.getPatient_id()));
 		
-		Doctor doctor = doctorRepo.findById(dto.getDoctorId())
-		.orElseThrow( ()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctorId()));
+		Doctor doctor = doctorRepo.findById(dto.getDoctor_id())
+		.orElseThrow( ()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctor_id()));
 		
-		Resource resource = resourceRepo.findById(dto.getResourceId())
-							.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + dto.getResourceId()));	
+		Admission admission = admissionRepo.findById(dto.getAdmission_id())
+                .orElseThrow(() -> new ResourceNotFoundException("Admission not found"));
+		
+		Resource resource = resourceRepo.findById(dto.getResource_id())
+							.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + dto.getResource_id()));	
+		
 		
 		ResourceRequest request = modelMapper.map(dto, ResourceRequest.class);
 		request.setDoctor(doctor);
 		request.setPatient(patient);
+		request.setAdmission(admission);
 		request.setResource(resource);
+		request.setStatus(RequestStatus.PENDING);
 		
 		ResourceRequest savedRequest = requestRepo.save(request);
 		
@@ -105,29 +122,50 @@ public class ResourceRequestDaoImpl implements ResourceRequestDao {
 	}
 
 	@Override
-	public ResourceRequestResDto updateRequestStatus(Long id, String status) {
-		log.info("Uppdating new resource request for doctor ID: ", id);
-		
-		ResourceRequest request = requestRepo.findById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + id));
-		
-		
-		
-		ResourceRequest savedRequest = requestRepo.save(request);
-		
-		log.info("Resource request created successfully with ID: {}", savedRequest.getId());
-		
-		return modelMapper.map(savedRequest, ResourceRequestResDto.class);
+	public ResourceRequestResDto approve(Long id) { 
+			ResourceRequest req = requestRepo.findById(id)
+			    .orElseThrow(() -> new ResourceNotFoundException("Request not found"));
+			
+			if (req.getStatus() != RequestStatus.PENDING)
+			throw new ApiException("Only pending requests can be approved");
+			
+			Resource resource = req.getResource();
+			
+			if (resource.getAvailableQuantity() <= 0)
+			throw new ApiException("Resource not available");
+			
+			ResourceAllocation allocation = new ResourceAllocation();
+			allocation.setAdmission(req.getAdmission());
+			allocation.setResource(resource);
+			allocation.setAllocatedAt(LocalDateTime.now());
+			allocation.setActive(true);
+			
+			allocationRepo.save(allocation);
+			
+			resource.setAvailableQuantity(resource.getAvailableQuantity() - 1);
+			resourceRepo.save(resource);
+			
+			req.setStatus(RequestStatus.APPROVED);
+			requestRepo.save(req);
+			
+			return modelMapper.map(req, ResourceRequestResDto.class);
 	}
-
+	
 	@Override
-	public void deleteRequest(Long id) {
-		
-        ResourceRequest request = requestRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Resource Request not found with ID: " + id));
-        requestRepo.delete(request);
-        
-        log.info("Resource Request deleted successfully with ID: {}", id);
-		
-	}
+	public ResourceRequestResDto reject(Long requestId) {
+
+        ResourceRequest req = requestRepo.findById(requestId)
+                .orElseThrow(() -> new ResourceNotFoundException("Request not found"));
+
+        if (req.getStatus() != RequestStatus.PENDING)
+            throw new ApiException("Only pending requests can be rejected");
+
+        req.setStatus(RequestStatus.REJECTED);
+
+        requestRepo.save(req);
+
+        return modelMapper.map(req, ResourceRequestResDto.class);
+    }
+	
+	
 }

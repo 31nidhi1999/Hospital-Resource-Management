@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,16 +23,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Doctor extends User {
 	
-	@NotNull
+	@NotBlank
 	private String specialization;
 	
 	@Column(unique = true,nullable = false)
 	private String licenseNumber;
 	
     private boolean isApproved = false;
-	
-	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-	private List<Patient> patients = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 	private List<ResourceRequest> requests = new ArrayList<>();

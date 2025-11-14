@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrms.dto.req.ScheduleReqDto;
 import com.hrms.dto.res.ApiResponse;
 import com.hrms.dto.res.ResourceResDto;
 import com.hrms.dto.res.ScheduleResDto;
@@ -33,19 +32,8 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleDao scheduleDao;
 	
-	@PostMapping
-	public ResponseEntity<?> createSchedule(@Valid @RequestBody ScheduleReqDto dto){
-		log.info("Request received to create doctor schedule: {}", dto);
-		 
-		 ScheduleResDto scheduleResDto = scheduleDao.createSchedule( dto);
-		 
-		 log.info("Patient created successfully with ID: ", scheduleResDto.getId());
-		 
-		return ResponseEntity.ok(scheduleResDto);
-	}
-	
 	@GetMapping
-	public ResponseEntity<List<ScheduleResDto>> getAllResource(){
+	public ResponseEntity<List<ScheduleResDto>> getAllSchedules(){
 		log.info("Fetching all resources ...");
 		 
 		 List<ScheduleResDto> allSchedules = scheduleDao.getAllSchedules();
@@ -54,7 +42,7 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<List<ScheduleResDto>> getResourceById(@PathVariable Long id){
+	public ResponseEntity<List<ScheduleResDto>> getSchedulesByDoctor(@PathVariable Long id){
 		log.info("Fetching schedule with doctor ID: {}", id);
 		
 		List<ScheduleResDto> schedulesByDoctor = scheduleDao.getSchedulesByDoctor(id);
@@ -62,22 +50,9 @@ public class ScheduleController {
 		return ResponseEntity.ok(schedulesByDoctor);
 	}
 	
-//	@PutMapping("/{id}")
-//	public ResponseEntity<?> updateResource(@PathVariable Long id, @Valid @RequestBody ScheduleReqDto dto){
-//		log.info("Updating schedule with ID: {}", id);
-//		
-//		ResourceResDto resourceResDto = resourceDao.updateResource(id, dto);
-//		
-//		return ResponseEntity.ok(resourceResDto);
-//	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteResourceById(@PathVariable Long id){
-		log.info("Deleting respurce with ID: {}", id);
-		
-		scheduleDao.deleteSchedule(id);
-		
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(new ApiResponse("Resource deleted successfully" + id));
+	@PostMapping("/generate")
+	public ResponseEntity<String> generateNextMonth() {
+		scheduleDao.generateNextMonthSchedule();
+		return ResponseEntity.ok("Schedule generation triggered for next month");
 	}
 }

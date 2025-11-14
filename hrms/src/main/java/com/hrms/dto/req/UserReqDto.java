@@ -11,8 +11,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class DoctorReqDto {
-	
+public class UserReqDto {
 	@NotBlank(message = "First Name Required")
 	private String firstName;
 	
@@ -22,15 +21,9 @@ public class DoctorReqDto {
 	@Email(message = "Email is Required")
 	private String email;
 	
-	@JsonProperty(access = Access.READ_ONLY)
-	private Role role = Role.DOCTOR;
-	
 	@NotBlank(message = "Password is Required")
 	private String password;
 	
-	@NotBlank(message = "Specialization is Required")
-	private String specialization;
-	
-	@NotBlank(message = "License Number is Required")
-	private String licenseNumber;
+	@JsonProperty(access = Access.READ_ONLY)
+	private Role role = Role.ADMIN;
 }
