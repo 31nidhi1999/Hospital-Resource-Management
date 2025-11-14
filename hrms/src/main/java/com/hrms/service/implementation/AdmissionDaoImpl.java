@@ -16,9 +16,11 @@ import com.hrms.entity.Admission;
 import com.hrms.entity.Doctor;
 import com.hrms.entity.Patient;
 import com.hrms.entity.Resource;
+import com.hrms.entity.ResourceAllocation;
 import com.hrms.repository.AdmissionRepo;
 import com.hrms.repository.DoctorRepo;
 import com.hrms.repository.PatientRepo;
+import com.hrms.repository.ResourceAllocationRepo;
 import com.hrms.repository.ResourceRepo;
 import com.hrms.service.AdmisssionDao;
 
@@ -43,6 +45,9 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private ResourceAllocationRepo allocationRepo;
 
     AdmissionDaoImpl(PatientRepo patientRepo) {
         this.patientRepo = patientRepo;
@@ -80,39 +85,25 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 
 	@Override
 	public AdmissionResDto admitPatient(AdmissionReqDto dto) {
-		log.info("Admitting new patient with ID: ", dto.getPatientId());
+		log.info("Admitting new patient with ID: ", dto.getPatient_id());
 		
-		Patient patient = patientRepo.findById(dto.getPatientId())
-				.orElseThrow(()-> new ResourceNotFoundException("Patient not found for ID: " + dto.getPatientId()));
+		Patient patient = patientRepo.findById(dto.getPatient_id())
+				.orElseThrow(()-> new ResourceNotFoundException("Patient not found for ID: " + dto.getPatient_id()));
 		
-		if(admissionRepo.existsByPatient_IdAndDischargeDateIsNull(dto.getPatientId())) {
+		if(admissionRepo.existsByPatient_IdAndDischargeDateIsNull(dto.getPatient_id())) {
 			throw new ApiException("Patient is already admitted and not yet discharged.");
 		}
 		
-		Doctor doctor = doctorRepo.findById(dto.getDoctorId())
-		.orElseThrow( ()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctorId()));
-		
-		Resource resource = resourceRepo.findById(dto.getResourceId())
-							.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + dto.getResourceId()));	
-		
-		if(!resource.getIsAvailable() || resource.getAvailableQuantity() <=0) {
-			throw new ApiException("Resource is not available for admission.");
-		}
+		Doctor doctor = doctorRepo.findById(dto.getDoctor_id())
+		.orElseThrow( ()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctor_id()));
 		
 		Admission admission = modelMapper.map(dto, Admission.class);
 		admission.setPatient(patient);
 		admission.setDoctor(doctor);
-		admission.setResource(resource);
 		
 		Admission savedAdmission = admissionRepo.save(admission);
 		
 		return modelMapper.map(savedAdmission, AdmissionResDto.class);
-	}
-
-	@Override
-	public AdmissionResDto updateAdmission(Long id, AdmissionReqDto dto) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -126,16 +117,28 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 			throw new ApiException("Patient is already discharged.");
 		}
 		
-		Resource resource = admission.getResource();
-		resource.setAvailableQuantity(resource.getAvailableQuantity() + 1);
-		resource.setIsAvailable(true);
-		
-		resourceRepo.save(resource);
-		
-		admission.setDischargeDate(LocalDateTime.now());
-		
-		admissionRepo.save(admission);
-		
-		log.info("Patient discharged successfully for admission ID: {}", id);
+		log.info("Discharging patient for admission ID: {}", id);
+
+        admission.setActive(false);
+        admission.setDischargeDate(LocalDateTime.now());
+        admissionRepo.save(admission);
+	    
+        List<ResourceAllocation> allocations =
+                allocationRepo.findByAdmissionIdAndIsActive(id, true);
+
+        log.info("Active resource allocations found: {}", allocations.size());
+        
+        for (ResourceAllocation allocation : allocations) {
+
+            Resource resource = allocation.getResource();
+            resource.setAvailableQuantity(resource.getAvailableQuantity() + 1);
+            resourceRepo.save(resource);
+
+            allocation.setActive(false);
+            allocation.setDeallocatedAt(LocalDateTime.now());
+            allocationRepo.save(allocation);
+
+            log.info("Resource {} deallocated from admission {}", resource.getId(), id);
+        }
 	}	
 }

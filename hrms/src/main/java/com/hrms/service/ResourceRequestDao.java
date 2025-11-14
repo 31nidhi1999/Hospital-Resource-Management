@@ -9,6 +9,6 @@ public interface ResourceRequestDao {
 	ResourceRequestResDto createRequest(ResourceRequestReqDto dto);
     ResourceRequestResDto getRequestById(Long id);
     List<ResourceRequestResDto> getAllRequests();
-    ResourceRequestResDto updateRequestStatus(Long id, String status);
-    void deleteRequest(Long id);
+    ResourceRequestResDto approve(Long id);
+    ResourceRequestResDto reject(Long requestId);
 }

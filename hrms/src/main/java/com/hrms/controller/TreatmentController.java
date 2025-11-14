@@ -51,14 +51,6 @@ public class TreatmentController {
         return ResponseEntity.ok(treatmentDao.getTreatmentById(id));
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponse> updateTreatment(@PathVariable Long id, @Valid @RequestBody TreatmentReqDto dto){
-		log.info("Updating treatment. ID: {}, Updated Fields: {}", id, dto);
-		TreatmentResDto treatment = treatmentDao.updateTreatment(id,dto);
-        return ResponseEntity
-        		.ok(new ApiResponse("Treatment created successfully ID : " + treatment.getId() + " Name of Patient : " +  treatment.getPatientFirstName() + " Name of Doctor : " +  treatment.getDoctorFirstName()));
-	}
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteTreatmentById(@PathVariable Long id){
 		log.info("Deleting treatment with ID: {}", id);

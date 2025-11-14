@@ -27,7 +27,7 @@ public class Treatment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long treatmentId;
+	private Long id;
 	
 	@NotBlank
 	private String diagnosis;

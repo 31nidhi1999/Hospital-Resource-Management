@@ -32,7 +32,7 @@ public class Admission {
 	@CreationTimestamp
 	private LocalDateTime admissionDate;
 	
-	private LocalDateTime dischargeDate = null;
+	private LocalDateTime dischargeDate;
 	
 	@ManyToOne
 	@JoinColumn(name="patient_id")
@@ -41,10 +41,6 @@ public class Admission {
 	@ManyToOne
 	@JoinColumn(name="doctor_id")
 	private Doctor doctor;
-	
-	@ManyToOne
-	@JoinColumn(name="resource_id")
-	private Resource resource;
 	
 	private boolean isActive=true;
 }

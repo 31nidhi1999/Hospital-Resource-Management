@@ -13,9 +13,9 @@ public class TreatmentResDto {
     private String prescribedMedication;
     private LocalDateTime createdAt;
     
-    private Long doctor_id;
+    private Long doctorId;
     private String doctorFirstName;
     
-    private Long patient_id;
+    private Long patientId;
     private String patientFirstName;
 }

@@ -56,7 +56,7 @@ public class TreatmentDaoImpl implements TreatmentDao {
 
 		Treatment savedTreatment = treatmentRepo.save(treatment);
 		
-		log.info("Treatment created successfully with ID: {}", savedTreatment.getTreatmentId());
+		log.info("Treatment created successfully with ID: {}", savedTreatment.getId());
 		
 		return modelMapper.map(savedTreatment, TreatmentResDto.class);
 	}
@@ -68,7 +68,7 @@ public class TreatmentDaoImpl implements TreatmentDao {
 		Treatment treatment = treatmentRepo.findById(id)
 		.orElseThrow(() -> new ResourceNotFoundException("Treatment not found with ID: " + id));
 		
-		log.info("Treatment fetched successfully with ID: {}", treatment.getTreatmentId());
+		log.info("Treatment fetched successfully with ID: {}", treatment.getId());
 		
 		treatment.getDoctor().getFirstName();
 		treatment.getPatient().getFirstName();
@@ -115,7 +115,7 @@ public class TreatmentDaoImpl implements TreatmentDao {
 
 		Treatment savedTreatment = treatmentRepo.save(treatment);
 		
-		log.info("Treatment created successfully with ID: {}", savedTreatment.getTreatmentId());
+		log.info("Treatment created successfully with ID: {}", savedTreatment.getId());
 		
 		return modelMapper.map(savedTreatment, TreatmentResDto.class);
 	}

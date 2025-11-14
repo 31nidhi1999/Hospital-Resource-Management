@@ -10,11 +10,9 @@ import lombok.Setter;
 public class AdmissionReqDto {
 	
 	@NotNull(message = "Patient ID is required")
-	private Long patientId;
+	private Long patient_id;
 	
 	@NotNull(message = "Doctor ID is required")
-	private Long doctorId;
+	private Long doctor_id;
 	
-	@NotNull(message = "Resource ID is required")
-	private Long resourceId;
 }

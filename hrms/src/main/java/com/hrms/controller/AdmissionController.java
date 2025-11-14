@@ -55,13 +55,6 @@ public class AdmissionController {
 		return ResponseEntity.ok(admissionResDto);
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<AdmissionResDto> updateAdmission(@PathVariable Long id, @Valid @RequestBody AdmissionReqDto dto){
-		log.info("Updating admission with ID: {}", id);
-		 AdmissionResDto updateAdmission = admisssionDao.updateAdmission(id, dto);
-		return ResponseEntity.ok(updateAdmission);
-	}
-	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> dischargePatient(@PathVariable Long id){
 		log.info("Deleting doctor with ID: {}", id);

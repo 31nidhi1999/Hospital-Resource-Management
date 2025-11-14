@@ -2,7 +2,7 @@ package com.hrms.dto.req;
 
 import com.hrms.entity.RequestStatus;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,12 +11,15 @@ import lombok.Setter;
 public class ResourceRequestReqDto {
 	private RequestStatus status = RequestStatus.PENDING;
 	
-	@NotBlank(message = "Doctor name is required")
-	private Long doctorId;
+	@NotNull(message = "Doctor ID is required")
+	private Long doctor_id;
 	
-	@NotBlank(message = "Patient name is required")
-	private Long patientId;
+	@NotNull(message = "Patient ID is required")
+	private Long patient_id;
 	
-	@NotBlank(message = "Resource name is required")
-	private Long resourceId;
+	@NotNull(message = "Resource ID is required")
+	private Long resource_id;
+	
+	@NotNull(message = "Admission ID required")
+    private Long admission_id;
 }
