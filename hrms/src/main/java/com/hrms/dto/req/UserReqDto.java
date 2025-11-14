@@ -1,26 +1,29 @@
 package com.hrms.dto.req;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hrms.entity.Role;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 public class UserReqDto {
-	@NotNull(message = "First Name Required")
+	@NotBlank(message = "First Name Required")
 	private String firstName;
 	
-	@NotNull(message = "Last Name Required")
+	@NotBlank(message = "Last Name Required")
 	private String lastName;
 	
 	@Email(message = "Email is Required")
 	private String email;
 	
-	@NotNull(message = "Password is Required")
+	@NotBlank(message = "Password is Required")
 	private String password;
 	
+	@JsonProperty(access = Access.READ_ONLY)
 	private Role role = Role.ADMIN;
 }

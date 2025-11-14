@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Doctor extends User {
 	
-	@NotNull
+	@NotBlank
 	private String specialization;
 	
 	@Column(unique = true,nullable = false)
