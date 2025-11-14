@@ -49,7 +49,4 @@ public class Resource {
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
 	private List<ResourceRequest> resourceRequests = new ArrayList<>();
-	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	private List<Patient> patients = new ArrayList<>();
 }
