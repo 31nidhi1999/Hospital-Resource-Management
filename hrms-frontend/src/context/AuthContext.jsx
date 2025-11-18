@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React,{ createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
+import api from "../api/axios"; 
 
 const AuthContext = createContext()
-export default AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
@@ -12,7 +13,7 @@ export default AuthProvider = ({ children }) => {
     }, [])
 
     const login = async (email, password) => {
-        const res = await api.post('/auth/login', { email, password })
+        const res = await api.post('/login', { email, password })
         // expected response: { token, user: { id, name, role } }
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('hrms_user', JSON.stringify(res.data.user))
