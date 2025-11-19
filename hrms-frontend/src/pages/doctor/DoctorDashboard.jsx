@@ -5,7 +5,7 @@ export default function DoctorDashboard(){
         <div>
            <h2 className="text-2xl font-semibold mb-4">Doctor Dashboard</h2>
            <div className="space-x-3">
-                
+                <Link to="/request-resource" className="px-3 py-2 bg-blue-600 text-white rounded">Raise Resource Request</Link>
            </div>
         </div>
     )
