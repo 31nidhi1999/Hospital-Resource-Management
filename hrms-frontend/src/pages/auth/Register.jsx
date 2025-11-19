@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerAdmin, registerDoctor, registerPatient } from "../api/registerUser";
+import { registerAdmin, registerDoctor, registerPatient } from "../../api/registerUser";
 
 
 export default function Register() {

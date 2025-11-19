@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
-import Login from './pages/Login'
+import Login from './pages/auth/Login'
 import { Route, Routes } from 'react-router-dom'
-import Register from './pages/Register'
+import Register from './pages/auth/Register'
 
 function App() {
 
