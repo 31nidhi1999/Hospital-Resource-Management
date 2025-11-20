@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AdmitPatient from './pages/admin/AdmitPatient'
 import DischargePatient from './pages/admin/DischargePatient'
 import ApproveDoctor from './pages/admin/ApproveDoctors'
+import DoctorSchedule from './pages/doctor/DoctorSchedule'
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
             <Route path="/register" element={<Register/>}/>
 
             <Route path="/doctor/dashboard" element={<DoctorDashboard/>}/>
-            <Route path="/doctor/schedule" element={<DoctorDashboard/>}/>
+            <Route path="/doctor/schedule/:id" element={<DoctorSchedule/>}/>
             <Route path="/doctor/request-resource"/>
 
             /**Schedule */

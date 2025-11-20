@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import api from "../../api/axios";
 import { scheduleList } from "../../api/schedule";
 
 export default function StaffSchedule() {
