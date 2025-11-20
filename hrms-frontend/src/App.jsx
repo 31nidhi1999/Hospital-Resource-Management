@@ -6,6 +6,10 @@ import { Route, Routes } from 'react-router-dom'
 import Register from './pages/auth/Register'
 import DoctorDashboard from './pages/doctor/DoctorDashboard'
 import StaffSchedule from './pages/admin/StaffSchedule'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdmitPatient from './pages/admin/AdmitPatient'
+import DischargePatient from './pages/admin/DischargePatient'
+import ApproveDoctor from './pages/admin/ApproveDoctors'
 
 function App() {
 
@@ -18,10 +22,15 @@ function App() {
             <Route path="/register" element={<Register/>}/>
 
             <Route path="/doctor/dashboard" element={<DoctorDashboard/>}/>
+            <Route path="/doctor/schedule" element={<DoctorDashboard/>}/>
             <Route path="/doctor/request-resource"/>
 
             /**Schedule */
+            <Route path="/admin/dashboard" element={<AdminDashboard/>}/>            
             <Route path="/admin/staff-schedule" element={<StaffSchedule/>}/>
+            <Route path="admin/admit" element={<AdmitPatient/>}/>
+            <Route path="/admin/discharge" element={<DischargePatient/>}/>
+            <Route path="/admin/approve-doctors" element={<ApproveDoctor/>}/>
           </Routes>
       </div>
     </div>

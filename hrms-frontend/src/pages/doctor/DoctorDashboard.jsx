@@ -7,6 +7,9 @@ export default function DoctorDashboard(){
            <div className="space-x-3">
                 <Link to="/request-resource" className="px-3 py-2 bg-blue-600 text-white rounded">Raise Resource Request</Link>
            </div>
+           <div className="space-x-3">
+                <Link to="/doctor/schedule" className="px-3 py-2 bg-blue-600 text-white rounded">Doctor Schedule</Link>
+           </div>
         </div>
     )
 }

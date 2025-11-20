@@ -14,4 +14,6 @@ public class ScheduleResDto {
     private String shiftType;
 
     private Long doctorId;
+    private String doctorFirstName;
+    private String doctorLastName;
 }
