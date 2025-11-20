@@ -13,8 +13,10 @@ public class AdmissionResDto {
 
     private Long patientId;
     private String patientFirstName;
+    private String patientLastName;
 
     private Long doctorId;
     private String doctorFirstName;
-
+    private String doctorLastName;
+    private Boolean active;
 }
