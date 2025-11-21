@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { scheduleList } from "../../api/schedule";
+import { scheduleList } from "../../api/List";
 
 export default function StaffSchedule() {
     const [schedules, setSchedules] = useState([]);

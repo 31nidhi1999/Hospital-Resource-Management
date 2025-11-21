@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllAdmitedlist } from "../../api/getAllAdmitedList";
-import { dischargePatient } from "../../api/dischargePatient";
+import { getAllAdmitedlist } from "../../api/List";
+import { dischargePatient } from "../../api/Patient";
 
 export default function DischargePatient() {
     const [admitedList, setAdmitedList] = useState([]);

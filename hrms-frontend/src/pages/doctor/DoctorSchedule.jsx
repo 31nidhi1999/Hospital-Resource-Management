@@ -1,4 +1,4 @@
-import { scheduleListById } from "../../api/schedule";
+import { scheduleListById } from "../../api/List";
 import { useState,useEffect } from "react";
 
 export default function DoctorSchedule(){

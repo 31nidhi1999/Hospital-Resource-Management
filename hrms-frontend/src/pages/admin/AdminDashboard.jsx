@@ -9,6 +9,7 @@ export default function AdminDashboard() {
                 <Link to="/admin/admit" className="p-4 bg-white rounded shadow">Admit Patient</Link>
                 <Link to="/admin/discharge" className="p-4 bg-white rounded shadow">Discharge Patient</Link>
                 <Link to="/admin/approve-doctors" className="p-4 bg-white rounded shadow">Approve Doctors</Link>
+                <Link to="/admin/add-resource" className="p-4 bg-white rounded shadow">Add Resource</Link>
             </div>
         </div>
     )
