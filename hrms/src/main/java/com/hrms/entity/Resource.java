@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,6 +36,7 @@ public class Resource {
 	private Long id;
 	
 	@NotBlank
+	@Column(unique = true)
 	private String resourceName;
 	
 	@Enumerated(EnumType.STRING)

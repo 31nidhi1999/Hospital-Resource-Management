@@ -23,7 +23,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/requests")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 public class ResourceRequestController {
 	@Autowired
 	private ResourceRequestDao requestDao;
