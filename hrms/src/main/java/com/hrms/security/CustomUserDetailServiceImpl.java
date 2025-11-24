@@ -29,7 +29,7 @@ public class CustomUserDetailServiceImpl implements UserDetailsService {
 		
 		 log.info("User found: {} with role: {}", user.getEmail(), user.getRole());
 		 
-		return new CustomUseDetails(user);
+		return new CustomeUserDetails(user);
 	}
 
 }

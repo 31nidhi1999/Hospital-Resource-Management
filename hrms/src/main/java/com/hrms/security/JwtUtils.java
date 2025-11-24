@@ -43,17 +43,17 @@ public class JwtUtils {
 	}
 
 	public String generateJwtToken(Authentication authentication) {
-		CustomUseDetails userPrincipal = (CustomUseDetails)authentication.getPrincipal();
+		CustomeUserDetails userPrincipal = (CustomeUserDetails)authentication.getPrincipal();
 
 		log.info("Generating JWT token for user: {}", userPrincipal.getUsername());
 		log.debug("User authorities: {}", userPrincipal.getAuthorities());
 		log.debug("User ID: {}", userPrincipal.getUser().getId());
 
-		System.out.println("authorities" + userPrincipal.getAuthorities());
 		System.out.println("user_id " + userPrincipal.getUsername());
 		String token = Jwts.builder().setSubject(userPrincipal.getUsername())
 				.setIssuedAt(new Date((new Date()).getTime() + jwtExpirationMs))
-				.claim("authorities", userPrincipal.getAuthorities()).claim("user_id", userPrincipal.getUser().getId())
+				.claim("authorities", getAuthoritiesInString(userPrincipal.getAuthorities()))
+				.claim("user_id", userPrincipal.getUser().getId())
 				.signWith(key, SignatureAlgorithm.HS256).compact();
 
 		log.info("JWT token generated successfully for user: {}", userPrincipal.getUsername());

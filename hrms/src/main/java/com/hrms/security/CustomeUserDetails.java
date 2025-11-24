@@ -13,12 +13,12 @@ import com.hrms.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CustomUseDetails implements UserDetails {
+public class CustomeUserDetails implements UserDetails {
 	
 	@Autowired
 	private User user;
 
-	public CustomUseDetails(User user2) {
+	public CustomeUserDetails(User user2) {
         this.user = user2;
         log.info("CustomUserDetails created for user: {}", user2.getEmail());
     }

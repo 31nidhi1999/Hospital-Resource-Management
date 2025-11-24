@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { LoginUser } from "../api/login";
 
 export default function Login(){
     const[email,setEmail] = useState('');
@@ -11,6 +12,13 @@ export default function Login(){
     const submit = async (e) =>{
         e.preventDefault();
         setLoading(true)
+
+        try{
+            const data = await LoginUser({email,password});
+        }catch(err){
+            console.error("Not able to login");
+        }
+
         setError('')
         try{
             await login(email,password)

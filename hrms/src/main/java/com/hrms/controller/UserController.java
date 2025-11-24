@@ -33,9 +33,9 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> loginser(@Valid @RequestBody SignInReqDto dto){
-		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
-		Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-		String jwtToken = jwtUtils.generateJwtToken(usernamePasswordAuthenticationToken);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.getUserName(), dto.getPassword());
+		Authentication authenticate = authenticationManager.authenticate(token);
+		String jwtToken = jwtUtils.generateJwtToken(authenticate);
 		SignInResDto signInResDto = new SignInResDto(jwtToken, "Succesfully login");
 		System.out.println(signInResDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(signInResDto);
