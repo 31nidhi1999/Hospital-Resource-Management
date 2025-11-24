@@ -5,15 +5,17 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hrms.custom_exceptions.ApiException;
 import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.UserReqDto;
 import com.hrms.dto.res.UserResDto;
 import com.hrms.dto.res.DoctorResDto;
 import com.hrms.entity.Doctor;
 import com.hrms.entity.User;
-import com.hrms.repository.AdminRepo;
+import com.hrms.repository.UserRepo;
 import com.hrms.service.AdminDao;
 
 import jakarta.transaction.Transactional;
@@ -25,7 +27,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminDaoImpl implements AdminDao {
 	
 	@Autowired
-	private AdminRepo adminRepo;
+	private PasswordEncoder encoder;
+	
+	@Autowired
+	private UserRepo adminRepo;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -37,6 +42,11 @@ public class AdminDaoImpl implements AdminDao {
 		User admin = modelMapper.map(dto, User.class);
 		admin.setRole(dto.getRole());
 		
+		if(adminRepo.existsByEmail(dto.getEmail())) {
+			throw new ApiException("user alrady exisit");
+		}
+		
+		admin.setPassword(encoder.encode(dto.getPassword()));
 		User savedAdmin = adminRepo.save(admin);
 		log.debug("Doctor saved with ID: ", savedAdmin.getId());
 		

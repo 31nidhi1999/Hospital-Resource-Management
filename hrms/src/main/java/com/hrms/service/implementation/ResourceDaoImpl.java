@@ -15,7 +15,7 @@ import com.hrms.dto.res.ResourceResDto;
 import com.hrms.entity.Patient;
 import com.hrms.entity.Resource;
 import com.hrms.entity.User;
-import com.hrms.repository.AdminRepo;
+import com.hrms.repository.UserRepo;
 import com.hrms.repository.ResourceRepo;
 import com.hrms.service.ResourceDao;
 
@@ -31,7 +31,7 @@ public class ResourceDaoImpl implements ResourceDao {
 	private ResourceRepo resourceRepo;
 	
 	@Autowired
-	private AdminRepo adminRepo;
+	private UserRepo adminRepo;
 	
 	@Autowired
 	private ModelMapper modelMapper;

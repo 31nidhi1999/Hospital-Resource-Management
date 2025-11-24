@@ -11,4 +11,5 @@ import java.util.List;
 public interface DoctorRepo extends JpaRepository<Doctor, Long> {
 	Doctor findByEmail(String email);
 	List<Doctor> findByIsActiveTrue();
+	boolean existsByEmail(String email);
 }

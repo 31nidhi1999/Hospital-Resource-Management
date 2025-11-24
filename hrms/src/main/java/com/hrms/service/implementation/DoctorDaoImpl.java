@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hrms.custom_exceptions.ApiException;
 import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.DoctorReqDto;
 import com.hrms.dto.res.DoctorResDto;
@@ -28,6 +30,9 @@ public class DoctorDaoImpl implements DoctorDao {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public DoctorResDto registerDoctor(DoctorReqDto dto) {
@@ -35,6 +40,12 @@ public class DoctorDaoImpl implements DoctorDao {
 
 		Doctor doctor = modelMapper.map(dto, Doctor.class);
 		doctor.setRole(dto.getRole());
+		
+		if(doctorRepo.existsByEmail(dto.getEmail())) {
+			throw new ApiException("user alrady exisit");
+		}
+		
+		doctor.setPassword(encoder.encode(dto.getPassword()));
 		
 		Doctor savedDoctor = doctorRepo.save(doctor);
 		log.debug("Doctor saved with ID: ", savedDoctor.getId());
