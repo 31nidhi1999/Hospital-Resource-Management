@@ -33,7 +33,7 @@ public class ResourceController {
 	@Autowired
 	private ResourceDao resourceDao;
 	
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<ApiResponse> registerResource(@Valid @RequestBody ResourceReqDto dto){
 		log.info("Request received to create patient: {}", dto);
 		 
@@ -45,7 +45,7 @@ public class ResourceController {
 					.ok(new ApiResponse("Resource Register successfully, ID : " + resourceResDto.getId()));
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<?> getAllResource(){
 		log.info("Fetching all resources ...");
 		 
@@ -54,7 +54,7 @@ public class ResourceController {
 		return ResponseEntity.ok(listAll);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<ResourceResDto> getResourceById(@PathVariable Long id){
 		log.info("Fetching resource with ID: {}", id);
 		
@@ -63,7 +63,7 @@ public class ResourceController {
 		return ResponseEntity.ok(resourceResDto);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<ApiResponse> updateResource(@PathVariable Long id, @Valid @RequestBody ResourceReqDto dto){
 		log.info("Updating patient with ID: {}", id);
 		
@@ -73,7 +73,7 @@ public class ResourceController {
 				.ok(new ApiResponse("Resource Update successfully, ID : " + resourceResDto.getId()));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteResourceById(@PathVariable Long id){
 		log.info("Deleting respurce with ID: {}", id);
 		

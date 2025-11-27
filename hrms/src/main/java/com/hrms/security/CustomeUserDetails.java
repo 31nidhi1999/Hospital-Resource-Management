@@ -43,7 +43,7 @@ public class CustomeUserDetails implements UserDetails {
     }
 
     public User getUser() {
-    	log.debug("Returning User object for: {}", user.getEmail());
+    	log.debug("Returning User object for: {}", user);
         return user;
     }
 

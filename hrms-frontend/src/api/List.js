@@ -2,7 +2,7 @@ import api from "./axios";
 
 export const getAllPatient = async () => {
     try {
-        const response = await api.get('/patients');
+        const response = await api.get('/patients/list');
         return response.data;
     } catch (error) {
         console.error("Enable to fetch Patient from System:", error);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAllPatient } from "../../api/getAllPatient";
-import { getAllDoctor } from "../../api/getAllDoctor";
-import { admitPatient } from "../../api/admitPatient";
+import { getAllPatient,getAllDoctor } from "../../api/List";
+import { admitPatient } from "../../api/Patient";
 
 export default function AdmitPatient() {
     const [patients, setPatients] = useState([]);

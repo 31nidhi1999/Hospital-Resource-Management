@@ -86,6 +86,7 @@ public class PatientDaoImpl implements PatientDao {
 	    		.orElseThrow(()-> new ResourceNotFoundException("Patient not found by id" + patId));
 		 
 		modelMapper.map(dto, patient);
+		patient.setPassword(encoder.encode(dto.getPassword()));
 		log.debug("Mapped PatientReqDto to existing Patient entity for ID: ", patId);
 		
 		Patient savedPatient = patientRepo.save(patient);

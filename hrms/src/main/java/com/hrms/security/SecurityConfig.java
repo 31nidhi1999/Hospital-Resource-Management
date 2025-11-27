@@ -44,14 +44,32 @@ public class SecurityConfig {
 	                "/swagger-resources/**",
 	                "/webjars/**",
 	                "/api/users/login",
-	                "api/doctors",
-	                "/api/patients",
-	                "/api/admins"
+	                "/api/doctors/register",
+	                "/api/patients/register",
+	                "/api/admins/register"
 	                
 	            ).permitAll()
 	            
 	            .requestMatchers(HttpMethod.OPTIONS).permitAll()
-	            .requestMatchers("/api/projects/create").hasAuthority("ADMIN")
+	            .requestMatchers("/api/resources/**",
+	            		"/api/doctors/delete/**",
+	            		"/api/doctors/list",
+	            		"/api/patients/list",
+	            		"/api/patients/delete/**",
+	            		"/api/requests/list",
+	            		"/api/requests/id/**",
+	            		"/api/schedules/list",
+	            		"/api/schedules/generate")
+	            .hasAuthority("ADMIN")
+	            .requestMatchers("/api/doctors/update/**",
+	            		"/id/**",
+	            		"/api/schedules/id/**",
+	            		"/api/requests/create",
+	            		"/api/treatments/**")
+	            .hasAuthority("DOCTOR")
+	            .requestMatchers("/api/patients/update/**",
+	            		"/id/**")
+	            .hasAuthority("PATIENT")
 	            .anyRequest().authenticated()
 	        )
 	        .formLogin(form -> form.disable())

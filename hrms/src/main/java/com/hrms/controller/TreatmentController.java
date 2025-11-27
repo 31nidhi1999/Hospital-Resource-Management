@@ -31,7 +31,7 @@ public class TreatmentController {
 	@Autowired
 	private TreatmentDao treatmentDao;
 	
-	@PostMapping
+	@PostMapping("create")
 	public ResponseEntity<ApiResponse> createTreatment(@Valid @RequestBody TreatmentReqDto dto){
 		log.info("Request received to create treatment for patientId: {}", dto.getPatient_id());
 		TreatmentResDto treatment = treatmentDao.createTreatment(dto);
@@ -39,19 +39,19 @@ public class TreatmentController {
         		.ok(new ApiResponse("Treatment created successfully ID : " + treatment.getId() + " Name of Patient : " +  treatment.getPatientFirstName() + " Name of Doctor : " +  treatment.getDoctorFirstName()));
 	}
 	
-	@GetMapping
+	@GetMapping("list")
 	public ResponseEntity<List<TreatmentResDto>> getAllTreatments(){
 		log.info("Fetching all treatments");
         return ResponseEntity.ok(treatmentDao.getAllTreatments());
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> getTreatmentById(@PathVariable Long id){
 		log.info("Fetching treatment with ID: {}", id);
         return ResponseEntity.ok(treatmentDao.getTreatmentById(id));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/update/{id}")
 	public ResponseEntity<?> deleteTreatmentById(@PathVariable Long id){
 		log.info("Deleting treatment with ID: {}", id);
         treatmentDao.deleteTreatment(id);

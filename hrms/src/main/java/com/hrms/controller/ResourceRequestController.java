@@ -27,7 +27,8 @@ import jakarta.validation.Valid;
 public class ResourceRequestController {
 	@Autowired
 	private ResourceRequestDao requestDao;
-	@PostMapping
+	
+	@PostMapping("/create")
     public ResponseEntity<ApiResponse> createRequest(@Valid @RequestBody ResourceRequestReqDto dto) {
 		
 		ResourceRequestResDto res = requestDao.createRequest(dto);
@@ -35,7 +36,7 @@ public class ResourceRequestController {
 		return ResponseEntity.ok(new ApiResponse("Resource request created successfully "  + res.getDoctorFirstName()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ResourceRequestResDto> getRequestById(@PathVariable Long id) {
 
         ResourceRequestResDto res = requestDao.getRequestById(id);
@@ -43,7 +44,7 @@ public class ResourceRequestController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<ResourceRequestResDto>> getAllRequests() {
 
         List<ResourceRequestResDto> list = requestDao.getAllRequests();
@@ -51,7 +52,7 @@ public class ResourceRequestController {
         return ResponseEntity.ok(list);
     }
 
-    @PutMapping("/{id}/approve")
+    @PutMapping("/id/{id}/approve")
     public ResponseEntity<ApiResponse> approveRequest(@PathVariable Long id) {
 
         ResourceRequestResDto res = requestDao.approve(id);
@@ -59,7 +60,7 @@ public class ResourceRequestController {
         return ResponseEntity.ok(new ApiResponse("Resource request approved successfully"));
     }
 
-    @PutMapping("/{id}/reject")
+    @PutMapping("/id/{id}/reject")
     public ResponseEntity<ApiResponse> rejectRequest(@PathVariable Long id) {
     	
     	ResourceRequestResDto res = requestDao.reject(id);

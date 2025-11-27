@@ -2,7 +2,7 @@ import api from "./axios";
 
 export const registerAdmin = async(data)=>{
     try{
-       const response = await api.post('/admins',data); 
+       const response = await api.post('/admins/register',data); 
        return response.data;
     }catch (error) {
     console.error("Admin registration failed:", error);
@@ -12,7 +12,7 @@ export const registerAdmin = async(data)=>{
 
 export const registerDoctor = async(data)=>{
     try{
-       const response = await api.post('/doctors',data); 
+       const response = await api.post('/doctors/register',data); 
        return response.data;
     }catch (error) {
     console.error("Doctor registration failed:", error);
@@ -22,7 +22,7 @@ export const registerDoctor = async(data)=>{
 
 export const registerPatient = async(data)=>{
     try{
-       const response = await api.post('/patients',data); 
+       const response = await api.post('/patients/register',data); 
        return response.data;
     }catch (error) {
     console.error("Patient registration failed:", error);

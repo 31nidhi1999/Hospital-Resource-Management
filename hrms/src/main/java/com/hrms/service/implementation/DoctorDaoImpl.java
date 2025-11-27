@@ -64,8 +64,10 @@ public class DoctorDaoImpl implements DoctorDao {
 		
 		Doctor doctor = doctorRepo.findById(docId)
 	            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found for id : " + docId));
-		 
+		
+		
 		modelMapper.map(dto, doctor);
+		doctor.setPassword(encoder.encode(dto.getPassword()));
 		log.debug("Mapped DoctorReqDto to Doctor entity for ID: ", docId);
 		
 		Doctor savedDoctor = doctorRepo.save(doctor);

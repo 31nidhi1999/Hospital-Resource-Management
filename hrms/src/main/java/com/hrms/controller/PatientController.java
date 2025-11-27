@@ -33,7 +33,7 @@ public class PatientController {
 	@Autowired
 	private PatientDao patientDao;
 	
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<ApiResponse> registerPatient(@Valid @RequestBody PatientReqDto dto){
 		 log.info("Request received to create patient: {}", dto);
 		 
@@ -45,7 +45,7 @@ public class PatientController {
 				.ok(new ApiResponse("Patient Register successfully: ID : " + registerPatient.getId() +" Email : " +  registerPatient.getEmail()));
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<?> getAllPatient(){
 		 log.info("Fetching all doctors ...");
 		 
@@ -54,7 +54,7 @@ public class PatientController {
 		return ResponseEntity.ok(listAll);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<PatientResDto> getPatientById(@PathVariable Long id){
 		log.info("Fetching patient with ID: {}", id);
 		
@@ -63,7 +63,7 @@ public class PatientController {
 		return ResponseEntity.ok(patientResDto);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<ApiResponse> updatePatient(@PathVariable Long id, @Valid @RequestBody PatientReqDto dto){
 		log.info("Updating patient with ID: {}", id);
 		
@@ -73,7 +73,7 @@ public class PatientController {
 				.ok(new ApiResponse("Patient Register successfully: ID : " + patientResDto.getId() +" Email : " +  patientResDto.getEmail()));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deletePatientById(@PathVariable Long id){
 		log.info("Deleting patient with ID: {}", id);
 		

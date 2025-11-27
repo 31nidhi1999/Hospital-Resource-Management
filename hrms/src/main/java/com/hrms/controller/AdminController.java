@@ -30,7 +30,7 @@ public class AdminController {
 	@Autowired
 	private AdminDao adminDao;
 	
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<ApiResponse> registerAdmin(@Valid @RequestBody UserReqDto dto){
 		 log.info("Request received to create admin: {}", dto);
 		 UserResDto registerAdmin = adminDao.registerAdmin(dto);
@@ -39,21 +39,21 @@ public class AdminController {
 				.ok(new ApiResponse("Admin created successfully: ID : " + registerAdmin.getId() +" Email : " +  registerAdmin.getEmail()));
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<List<UserResDto>> getAllAdmin(){
 		 log.info("Fetching all Admin ...");
 		 List<UserResDto> listAll = adminDao.listAll();
 		return ResponseEntity.ok(listAll);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<UserResDto> getAdminById(@PathVariable Long id){
 		log.info("Fetching Admin with ID: {}", id);
 		UserResDto adminResDto = adminDao.getAdminById(id);
 		return ResponseEntity.ok(adminResDto);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<ApiResponse> updateAdmin(@PathVariable Long id, @Valid @RequestBody UserReqDto dto){
 		log.info("Updating Admin with ID: {}", id);
 		UserResDto adminResDto = adminDao.updateAdmin(id, dto);
@@ -61,7 +61,7 @@ public class AdminController {
 				.ok(new ApiResponse("Admin deatil updated successfully: ID : " + adminResDto.getId() +" Email : " +  adminResDto.getEmail()));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/id/{id}")
 	public ResponseEntity<ApiResponse> deleteAdminById(@PathVariable Long id){
 		log.info("Deleting admin with ID: {}", id);
 		adminDao.deleteAdmin(id);
