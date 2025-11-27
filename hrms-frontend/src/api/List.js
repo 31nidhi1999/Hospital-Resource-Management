@@ -49,3 +49,33 @@ export const scheduleListById = async(id)=>{
         throw error;
     }
 }
+
+export const resourceList = async()=>{
+    try{
+       const res = await  api.get('/resources');
+       return res.data;
+    }catch(error){
+        console.error("Failed to fetch resource lsit:", error);
+        throw error;
+    }
+}
+
+export const getAllAdmission = async()=>{
+    try{
+       const res = await  api.get('/admissions');
+       return res.data;
+    }catch(error){
+        console.error("Failed to fetch admission list:", error);
+        throw error;
+    }
+}
+
+export const getAllRequest = async()=>{
+    try{
+       const res = await  api.get('/requests');
+       return res.data;
+    }catch(error){
+        console.error("Failed to fetch resource request list:", error);
+        throw error;
+    }
+}

@@ -16,9 +16,11 @@ public class ResourceRequestResDto {
 
     private Long doctorId;
     private String doctorFirstName;
+    private String doctorLastName;
 
     private Long patientId;
     private String patientFirstName;
+    private String patientLastName;
 
     private Long resourceId;
     private String resourceName;

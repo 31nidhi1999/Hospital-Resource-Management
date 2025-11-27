@@ -4,6 +4,5 @@ public enum ResourceType {
 	BED,
     VENTILATOR,
     EQUIPMENT,
-    ROOM,
-    OTHER
+    ROOM
 }

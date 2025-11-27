@@ -12,6 +12,9 @@ import DischargePatient from './pages/admin/DischargePatient'
 import ApproveDoctor from './pages/admin/ApproveDoctors'
 import DoctorSchedule from './pages/doctor/DoctorSchedule'
 import ProtectedRoute from './components/ProtectedRoute'
+import AddResource from './pages/admin/AddResource'
+import RaisedRequest from './pages/doctor/RaisedRequest'
+import ResourceAllocation from './pages/admin/ResourceAllocation'
 
 function App() {
 

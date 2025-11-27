@@ -1,5 +1,7 @@
 package com.hrms.dto.req;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hrms.entity.RequestStatus;
 
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +11,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ResourceRequestReqDto {
+	
+	@JsonProperty(access = Access.READ_ONLY)
 	private RequestStatus status = RequestStatus.PENDING;
 	
 	@NotNull(message = "Doctor ID is required")
