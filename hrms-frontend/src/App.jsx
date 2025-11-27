@@ -36,11 +36,13 @@ function App() {
             <Route path="/doctor/request-resource"/>
 
             /**Schedule */
+            <Route path="/admin/resource-requests" element={<ProtectedRoute role="ADMIN"><ResourceAllocation/></ProtectedRoute>}/>
             <Route path="/admin/dashboard" element={<ProtectedRoute role="ADMIN"><AdminDashboard/></ProtectedRoute>}/>            
             <Route path="/admin/staff-schedule" element={<ProtectedRoute  role="ADMIN"><StaffSchedule/></ProtectedRoute>}/>
-            <Route path="admin/admit" element={<ProtectedRoute role="ADMIN"><AdmitPatient/></ProtectedRoute>}/>
+            <Route path="/admin/admit" element={<ProtectedRoute role="ADMIN"><AdmitPatient/></ProtectedRoute>}/>
             <Route path="/admin/discharge" element={<ProtectedRoute  role="ADMIN"><DischargePatient/></ProtectedRoute>}/>
             <Route path="/admin/approve-doctors" element={<ProtectedRoute role="ADMIN"><ApproveDoctor/></ProtectedRoute>}/>
+            <Route path="/admin/add-resource" element={<ProtectedRoute role="ADMIN"><AddResource/></ProtectedRoute>}/>
           </Routes>
       </div>
     </div>
