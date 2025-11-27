@@ -32,7 +32,7 @@ public class DoctorContoller {
 	@Autowired
 	private DoctorDao doctorDao;
 	
-	@PostMapping
+	@PostMapping("/register")
 	public ResponseEntity<ApiResponse> registerDoctor(@Valid @RequestBody DoctorReqDto dto){
 		 log.info("Request received to create doctor: {}", dto);
 		 DoctorResDto registerDoctor = doctorDao.registerDoctor(dto);
@@ -41,21 +41,21 @@ public class DoctorContoller {
 				.ok(new ApiResponse("Doctor created successfully: ID : " + registerDoctor.getId() +" Email : " +  registerDoctor.getEmail()));
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<List<DoctorResDto>> getAllDoctor(){
 		 log.info("Fetching all doctors ...");
 		 List<DoctorResDto> listAll = doctorDao.listAll();
 		return ResponseEntity.ok(listAll);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<DoctorResDto> getDoctorById(@PathVariable Long id){
 		log.info("Fetching doctor with ID: {}", id);
 		DoctorResDto doctorResDto = doctorDao.getDoctorById(id);
 		return ResponseEntity.ok(doctorResDto);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<ApiResponse> updateDoctor(@PathVariable Long id, @Valid @RequestBody DoctorReqDto dto){
 		log.info("Updating doctor with ID: {}", id);
 		DoctorResDto doctorResDto = doctorDao.updateDoctor(id, dto);
@@ -63,7 +63,7 @@ public class DoctorContoller {
 				.ok(new ApiResponse("Doctor deatil updated successfully: ID : " + doctorResDto.getId() +" Email : " +  doctorResDto.getEmail()));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<ApiResponse> deleteDoctorById(@PathVariable Long id){
 		log.info("Deleting doctor with ID: {}", id);
 		doctorDao.deleteDoctor(id);

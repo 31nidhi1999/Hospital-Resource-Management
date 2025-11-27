@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { registerAdmin, registerDoctor, registerPatient } from "../../api/registerUser";
-
+import { User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
     const [role, setRole] = useState('ADMIN');
@@ -65,39 +66,48 @@ export default function Register() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-            <h2 className="text-xl font-semibold mb-4">Register</h2>
-            {msg && <div className="mb-3 text-green-700">{msg}</div>}
-            <form onSubmit={submit} className="space-y-3">
-                <div>
-                    <label className="block mb-1">Role</label>
-                    <select value={role} onChange={e => setRole(e.target.value)} className="p-2 border rounded">
-                        <option value="DOCTOR">Doctor</option>
-                        <option value="PATIENT">Patient</option>
-                        <option value="ADMIN">Admin</option>
-                    </select>
-                </div>
-                <input name="firstName" value={form.firstName} onChange={onChange} placeholder="First Name" className="w-full p-2 border rounded" />
-                <input name="lastName" value={form.lastName} onChange={onChange} placeholder="Last Name" className="w-full p-2 border rounded" />
-                <input name="email" value={form.email} onChange={onChange} placeholder="Email" className="w-full p-2 border rounded" />
-                <input name="password" value={form.password} onChange={onChange} placeholder="Password" className="w-full p-2 border rounded" />
-
-                {role === 'DOCTOR' && (
-                    <div className="space-y-2">
-                        <input name="specialization" value={extra.specialization} onChange={onExtra} placeholder="Specialization" className="w-full p-2 border rounded" />
-                        <input name="licenseNumber" value={extra.licenseNumber} onChange={onExtra} placeholder="licenseNumber" className="w-full p-2 border rounded" />
+        <div className="min-h-screen flex items-center justify-center bg-[#F7F9FC]">
+            <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg">
+                <h2 className="text-2xl font-semibold text-indigo-700 mb-6 text-center">Register</h2>
+                {msg && <div className="mb-3 text-green-700">{msg}</div>}
+                <form onSubmit={submit} className="space-y-4">
+                    <div>
+                        <label className="block mb-1">Role</label>
+                        <select value={role} onChange={e => setRole(e.target.value)} className="w-full p-2 border rounded-lg bg-gray-50">
+                            <option value="DOCTOR">Doctor</option>
+                            <option value="PATIENT">Patient</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
                     </div>
-                )}
+                    <input name="firstName" value={form.firstName} onChange={onChange} placeholder="First Name" className="w-full p-2 border rounded" />
+                    <input name="lastName" value={form.lastName} onChange={onChange} placeholder="Last Name" className="w-full p-2 border rounded" />
+                    <input name="email" value={form.email} onChange={onChange} placeholder="Email" className="w-full p-2 border rounded" />
+                    <input name="password" value={form.password} onChange={onChange} placeholder="Password" className="w-full p-2 border rounded" />
 
-                {role === 'PATIENT' && (
-                    <div className="space-y-2">
-                        <input name="age" value={extra.age} onChange={onExtra} placeholder="age" className="w-full p-2 border rounded" />
-                        <input name="address" value={extra.address} onChange={onExtra} placeholder="address" className="w-full p-2 border rounded" />
-                    </div>
-                )}
+                    {role === 'DOCTOR' && (
+                        <div className="space-y-2">
+                            <input name="specialization" value={extra.specialization} onChange={onExtra} placeholder="Specialization" className="w-full p-2 border rounded" />
+                            <input name="licenseNumber" value={extra.licenseNumber} onChange={onExtra} placeholder="licenseNumber" className="w-full p-2 border rounded" />
+                        </div>
+                    )}
 
-                <button type="submit" className="w-full p-2 bg-green-600 text-white rounded">Register</button>
-            </form>
+                    {role === 'PATIENT' && (
+                        <div className="space-y-2">
+                            <input name="age" value={extra.age} onChange={onExtra} placeholder="age" className="w-full p-2 border rounded" />
+                            <input name="address" value={extra.address} onChange={onExtra} placeholder="address" className="w-full p-2 border rounded" />
+                        </div>
+                    )}
+
+                    <button type="submit" className="w-full p-2 bg-green-600 text-white rounded flex items-center justify-center gap-2"><User size={18} />Register</button>
+                </form>
+
+                <p className="text-center text-sm mt-4 text-gray-600">
+                    Already have an account?
+                    <Link to="/login" className="text-indigo-600 font-semibold ml-1">
+                        Login here
+                    </Link>
+                </p>
+            </div>
         </div>
     )
 }

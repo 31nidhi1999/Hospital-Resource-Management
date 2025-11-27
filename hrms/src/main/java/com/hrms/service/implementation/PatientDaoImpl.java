@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hrms.custom_exceptions.ApiException;
 import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.PatientReqDto;
 import com.hrms.dto.res.DoctorResDto;
@@ -29,6 +31,9 @@ public class PatientDaoImpl implements PatientDao {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public List<PatientResDto> listAll() {
@@ -57,6 +62,11 @@ public class PatientDaoImpl implements PatientDao {
 		Patient patient = modelMapper.map(dto, Patient.class);
 		patient.setRole(dto.getRole());
 		
+		if(patientRepo.existsByEmail(dto.getEmail())) {
+			throw new ApiException("user alrady exisit");
+		}
+		
+		patient.setPassword(encoder.encode(dto.getPassword()));
 		Patient savedPatient = patientRepo.save(patient);
 		log.debug("Patient saved with ID: ", savedPatient.getId());
 		
@@ -76,6 +86,7 @@ public class PatientDaoImpl implements PatientDao {
 	    		.orElseThrow(()-> new ResourceNotFoundException("Patient not found by id" + patId));
 		 
 		modelMapper.map(dto, patient);
+		patient.setPassword(encoder.encode(dto.getPassword()));
 		log.debug("Mapped PatientReqDto to existing Patient entity for ID: ", patId);
 		
 		Patient savedPatient = patientRepo.save(patient);

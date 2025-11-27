@@ -32,7 +32,7 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleDao scheduleDao;
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<List<ScheduleResDto>> getAllSchedules(){
 		log.info("Fetching all resources ...");
 		 
@@ -41,7 +41,7 @@ public class ScheduleController {
 		return ResponseEntity.ok(allSchedules);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<List<ScheduleResDto>> getSchedulesByDoctor(@PathVariable Long id){
 		log.info("Fetching schedule with doctor ID: {}", id);
 		
