@@ -22,7 +22,7 @@ export const raisedRequest = async (data) => {
 
 export const approveRequest = async (id) => {
     try {
-        const res = await api.put(`/requests/${id}/approve`);
+        const res = await api.put(`/requests/id/${id}/approve`);
         return res.data;
     } catch (err) {
         console.error("Failed to raised request:", err);
@@ -32,7 +32,7 @@ export const approveRequest = async (id) => {
 
 export const rejectRequest = async (id) => {
     try {
-        const res = await api.put(`/requests/${id}/reject`);
+        const res = await api.put(`/requests/id/${id}/reject`);
         return res.data;
     } catch (err) {
         console.error("Failed to raised request:", err);

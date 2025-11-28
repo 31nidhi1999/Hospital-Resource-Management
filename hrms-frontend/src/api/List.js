@@ -72,7 +72,7 @@ export const getAllAdmission = async()=>{
 
 export const getAllRequest = async()=>{
     try{
-       const res = await  api.get('/requests');
+       const res = await  api.get('/requests/list');
        return res.data;
     }catch(error){
         console.error("Failed to fetch resource request list:", error);

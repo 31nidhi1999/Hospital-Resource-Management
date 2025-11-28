@@ -61,6 +61,8 @@ public class SecurityConfig {
 	            		"/api/patients/delete/**",
 	            		"/api/requests/list",
 	            		"/api/requests/id/**",
+	            		"/api/requests/id/*/approve",
+	            		"/api/requests/id/*/reject",
 	            		"/api/schedules/list",
 	            		"/api/schedules/generate",
 	            		"/api/admissions/create",
