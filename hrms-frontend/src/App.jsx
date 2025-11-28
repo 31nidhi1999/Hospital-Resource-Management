@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* <Navbar/> */}
+      <Navbar/>
       <div className="container mx-auto p-4">
           <Routes>
             <Route path="/" element={<Login/>}/>

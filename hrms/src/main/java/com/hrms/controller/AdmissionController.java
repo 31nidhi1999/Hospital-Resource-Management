@@ -26,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/admissions")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173")
 @Slf4j
 public class AdmissionController {
 	
 	@Autowired
 	private AdmisssionDao admisssionDao;
 
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<AdmissionResDto> admitPatient(@Valid @RequestBody AdmissionReqDto dto){
 		 log.info("Request received to admit patient: {}", dto);
 		 AdmissionResDto admissionResDto = admisssionDao.admitPatient(dto);
@@ -48,14 +48,14 @@ public class AdmissionController {
 		return ResponseEntity.ok(listAll);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> getAdmissionById(@PathVariable Long id){
 		log.info("Fetching admission with ID: {}", id);
 		AdmissionResDto admissionResDto = admisssionDao.getAdmissionById(id);
 		return ResponseEntity.ok(admissionResDto);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/id/{id}")
 	public ResponseEntity<?> dischargePatient(@PathVariable Long id){
 		log.info("Deleting doctor with ID: {}", id);
 		admisssionDao.dischargePatient(id);

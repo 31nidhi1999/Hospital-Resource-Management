@@ -51,7 +51,10 @@ public class SecurityConfig {
 	            ).permitAll()
 	            
 	            .requestMatchers(HttpMethod.OPTIONS).permitAll()
-	            .requestMatchers("/api/resources/**",
+	            .requestMatchers("/api/resources/register",
+	            		"/api/resources/id/**",
+	            		"/api/resources/update/**",
+	            		"/api/resources/delete/**",
 	            		"/api/doctors/delete/**",
 	            		"/api/doctors/list",
 	            		"/api/patients/list",
@@ -60,19 +63,20 @@ public class SecurityConfig {
 	            		"/api/requests/id/**",
 	            		"/api/schedules/list",
 	            		"/api/schedules/generate",
-	            		"/api/admissions/**")
+	            		"/api/admissions/create",
+	            		"/api/admissions/id/**")
 	            .hasAuthority("ADMIN")
 	            .requestMatchers("/api/doctors/update/**",
 	            		"/id/**",
 	            		"/api/schedules/id/**",
 	            		"/api/requests/create",
-	            		"/api/treatments/**",
-	            		"/api/admissions/list",
-	            		"/api/resources/list")
+	            		"/api/treatments/**")
 	            .hasAuthority("DOCTOR")
-	            .requestMatchers("/api/patients/update/**",
-	            		"/id/**")
-	            .hasAuthority("PATIENT")
+				.requestMatchers("/api/admissions/list", "/api/resources/list")
+				.hasAnyAuthority("ADMIN", "DOCTOR")
+//	            .requestMatchers("/api/patients/update/**",
+//	            		"/id/**")
+//	            .hasAuthority("PATIENT")
 	            .anyRequest().authenticated()
 	        )
 	        .formLogin(form -> form.disable())
