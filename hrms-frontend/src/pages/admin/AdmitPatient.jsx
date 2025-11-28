@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllPatient,getAllDoctor } from "../../api/List";
+import { getAllPatient, getAllDoctor } from "../../api/List";
 import { admitPatient } from "../../api/Patient";
+import { UserPlus } from "lucide-react";
 
 export default function AdmitPatient() {
     const [patients, setPatients] = useState([]);
@@ -43,25 +44,42 @@ export default function AdmitPatient() {
     }, []);
 
     return (
-        <div className="max-w-lg bg-white p-6 rounded shadow">
-            <h3 className="text-xl mb-3">Admit Patient</h3>
-            <form onSubmit={submit} className="space-y-3">
-                <select value={paylaod.patient_id} onChange={e => setPayload({ ...paylaod, patient_id: e.target.value })} className="w-full p-2 border rounded">
-                    <option value="">Select Patient</option>
-                    {patients.map(p =>
-                        <option key={p.id} value={p.id}>{p.firstName} {p.lastName}</option>
-                    )}
-                </select>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
+            <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 border border-indigo-100">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-indigo-100 p-3 rounded-xl">
+                        <UserPlus className="text-indigo-700" size={26} />
+                    </div>
+                    <h2 className="text-2xl font-bold text-indigo-800">Admit Patient</h2>
+                </div>
 
-                <select value={paylaod.doctor_id} onChange={(e) => setPayload({ ...paylaod, doctor_id: e.target.value })} className="w-full p-2 border rounded">
-                    <option value="">Select Doctor</option>
-                    {doctors.map(d =>
-                        <option key={d.id} value={d.id}>{d.firstName} {d.lastName}</option>
-                    )}
-                </select>
+                <form onSubmit={submit} className="space-y-5">
 
-                <button type="submit" className="w-full p-2 bg-green-600 text-white rounded">Admit</button>
-            </form>
+                    <div>
+                        <select value={paylaod.patient_id}
+                            onChange={e => setPayload({ ...paylaod, patient_id: e.target.value })}
+                            className="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-300 outline-none">
+                            <option value="">Select Patient</option>
+                            {patients.map(p =>
+                                <option key={p.id} value={p.id}>{p.firstName} {p.lastName}</option>
+                            )}
+                        </select>
+                    </div>
+
+                    <div>
+                        <select value={paylaod.doctor_id}
+                            onChange={(e) => setPayload({ ...paylaod, doctor_id: e.target.value })}
+                            className="w-full p-3 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-300 outline-none">
+                            <option value="">Select Doctor</option>
+                            {doctors.map(d =>
+                                <option key={d.id} value={d.id}>{d.firstName} {d.lastName}</option>
+                            )}
+                        </select>
+                    </div>
+
+                    <button type="submit" className="w-full p-2 bg-green-600 text-white rounded">Admit</button>
+                </form>
+            </div>
         </div>
     )
 }

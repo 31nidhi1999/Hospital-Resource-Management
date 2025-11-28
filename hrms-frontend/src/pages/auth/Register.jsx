@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { registerAdmin, registerDoctor, registerPatient } from "../../api/registerUser";
 import { User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [role, setRole] = useState('ADMIN');
     const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '' })
     const [extra, setExtra] = useState({ specialization: '', licenseNumber: '', age: '', address: '' })
     const [msg, setMsg] = useState('')
-
+    const navigate = useNavigate();
+    
     const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
     const onExtra = (e) => setExtra({ ...extra, [e.target.name]: e.target.value })
 
@@ -23,7 +24,7 @@ export default function Register() {
         if (role === 'ADMIN') {
             try {
                 const res = await registerAdmin(form)
-                alert("Admin Registered Successfully!");
+                navigate('/login');
                 console.log(res)
             } catch (err) {
                 alert("Error registering admin");
@@ -33,7 +34,7 @@ export default function Register() {
         if (role === 'DOCTOR') {
             try {
                 const res = await registerDoctor(payload)
-                alert("Doctor Registered Successfully!");
+                navigate('/login');
                 console.log(res)
             } catch (err) {
                 alert("Error registering doctor");
@@ -43,7 +44,7 @@ export default function Register() {
         if (role === 'PATIENT') {
             try {
                 const res = await registerPatient(payload)
-                alert("Patient Registered Successfully!");
+                navigate('/login');
                 console.log(res)
             } catch (err) {
                 alert("Error registering Patient");

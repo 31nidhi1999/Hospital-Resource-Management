@@ -2,7 +2,7 @@ import api from "./axios";
 
 export const addResource = async (data) => {
     try {
-        const res = await api.post("/resources", data);
+        const res = await api.post("/resources/register", data);
         return res.data;
     } catch (err) {
         console.error("Adding resource  failed:", err);
@@ -12,7 +12,7 @@ export const addResource = async (data) => {
 
 export const raisedRequest = async (data) => {
     try {
-        const res = await api.post("/requests", data);
+        const res = await api.post("/requests/create", data);
         return res.data;
     } catch (err) {
         console.error("Failed to raised request:", err);

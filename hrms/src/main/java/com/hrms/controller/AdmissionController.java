@@ -41,7 +41,7 @@ public class AdmissionController {
 		return ResponseEntity.ok(admissionResDto);
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<List<AdmissionResDto>> getAllAdmission(){
 		log.info("Fetching all admission ...");
 		 List<AdmissionResDto> listAll = admisssionDao.listAllAdmission();

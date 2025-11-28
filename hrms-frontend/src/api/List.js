@@ -12,7 +12,7 @@ export const getAllPatient = async () => {
 
 export const getAllAdmitedlist= async()=>{
     try{
-        const response = await api.get("/admissions");
+        const response = await api.get("/admissions/list");
         return response.data;
     }catch(err){
         console.error("Enable to fetch admitted list from System:", err);
@@ -22,7 +22,7 @@ export const getAllAdmitedlist= async()=>{
 
 export const getAllDoctor = async () => {
     try {
-        const response = await api.get('/doctors');
+        const response = await api.get('/doctors/list');
         return response.data;
     } catch (error) {
         console.error("Enable to fetch Doctor from System:", error);
@@ -32,7 +32,7 @@ export const getAllDoctor = async () => {
 
 export const scheduleList = async(data)=>{
     try{
-       const res = await  api.get('/schedules');
+       const res = await  api.get('/schedules/list');
        return res.data;
     }catch(error){
         console.error("Failed to fetch schedule:", error);
@@ -42,7 +42,7 @@ export const scheduleList = async(data)=>{
 
 export const scheduleListById = async(id)=>{
     try{
-       const res = await  api.get(`/schedules/${id}`);
+       const res = await  api.get(`/schedules/id/${id}`);
        return res.data;
     }catch(error){
         console.error("Failed to fetch schedule:", error);
@@ -52,7 +52,7 @@ export const scheduleListById = async(id)=>{
 
 export const resourceList = async()=>{
     try{
-       const res = await  api.get('/resources');
+       const res = await  api.get('/resources/list');
        return res.data;
     }catch(error){
         console.error("Failed to fetch resource lsit:", error);
@@ -62,7 +62,7 @@ export const resourceList = async()=>{
 
 export const getAllAdmission = async()=>{
     try{
-       const res = await  api.get('/admissions');
+       const res = await  api.get('/admissions/list');
        return res.data;
     }catch(error){
         console.error("Failed to fetch admission list:", error);
