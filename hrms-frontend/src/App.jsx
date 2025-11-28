@@ -32,8 +32,8 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword/>}/>
 
             <Route path="/doctor/dashboard" element={<ProtectedRoute role="DOCTOR"><DoctorDashboard/></ProtectedRoute>}/>
-            <Route path="/doctor/schedule/:id" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
-            <Route path="/doctor/request-resource"/>
+            <Route path="/doctor/schedule" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
+            <Route path="/doctor/request-resource" element={<ProtectedRoute role="DOCTOR"><RaisedRequest/></ProtectedRoute>}/>
 
             /**Schedule */
             <Route path="/admin/resource-requests" element={<ProtectedRoute role="ADMIN"><ResourceAllocation/></ProtectedRoute>}/>

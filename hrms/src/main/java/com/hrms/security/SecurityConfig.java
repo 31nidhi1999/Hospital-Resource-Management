@@ -64,13 +64,16 @@ public class SecurityConfig {
 	            		"/api/requests/list",
 	            		"/api/requests/id/**",
 	            		"/api/schedules/list",
-	            		"/api/schedules/generate")
+	            		"/api/schedules/generate",
+	            		"/api/admissions/**")
 	            .hasAuthority("ADMIN")
 	            .requestMatchers("/api/doctors/update/**",
 	            		"/id/**",
 	            		"/api/schedules/id/**",
 	            		"/api/requests/create",
-	            		"/api/treatments/**")
+	            		"/api/treatments/**",
+	            		"/api/admissions/list",
+	            		"/api/resources/list")
 	            .hasAuthority("DOCTOR")
 	            .requestMatchers("/api/patients/update/**",
 	            		"/id/**")

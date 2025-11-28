@@ -16,4 +16,5 @@ public class ScheduleResDto {
     private Long doctorId;
     private String doctorFirstName;
     private String doctorLastName;
+    private String specialization;
 }
