@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hrms.custom_exceptions.ApiException;
-import com.hrms.dto.req.ForgetPasswordReq;
-import com.hrms.dto.req.ResetPasswordReq;
 import com.hrms.dto.req.SignInReqDto;
 import com.hrms.dto.req.VerifyOtpReq;
 import com.hrms.dto.res.ForgetPasswordRes;

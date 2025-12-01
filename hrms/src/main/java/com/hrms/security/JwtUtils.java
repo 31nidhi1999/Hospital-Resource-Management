@@ -120,6 +120,24 @@ public class JwtUtils {
 	    return tokenOtp.equals(req.getOtp());
 	}
 
+	
+	public boolean verifyOtp(VerifyOtpReq req) {
+
+	    Claims claims = Jwts.parserBuilder()
+	            .setSigningKey(key)
+	            .build()
+	            .parseClaimsJws(req.getOtpToken())
+	            .getBody();
+
+	    String tokenEmail = claims.getSubject();
+	    String tokenOtp = (String) claims.get("otp");
+
+	    if (!tokenEmail.equals(req.getEmail()))
+	        throw new RuntimeException("Email mismatch");
+
+	    return tokenOtp.equals(req.getOtp());
+	}
+
 
 	private String getAuthoritiesInString(Collection<? extends GrantedAuthority> authorities) {
 		log.debug("Converting authorities to string...");
