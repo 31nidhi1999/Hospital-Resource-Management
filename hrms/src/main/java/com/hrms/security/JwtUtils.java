@@ -12,7 +12,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import com.hrms.dto.req.ResetPasswordReq;
+import com.hrms.dto.req.VerifyOtpReq;
+import com.hrms.entity.User;
+import com.hrms.repository.UserRepo;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -33,7 +39,13 @@ public class JwtUtils {
 
 	@Autowired
 	private CustomUserDetailServiceImpl customUserDetailService;
+	
+	@Autowired
+	private UserRepo userRepo;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	private Key key;
 
 	@PostConstruct
@@ -59,6 +71,16 @@ public class JwtUtils {
 		log.info("JWT token generated successfully for user: {}", userPrincipal.getUsername());
 		return token;
 	}
+	
+	public String generateOtpToken(String email, String otp) {
+	    return Jwts.builder()
+	            .setSubject(email)
+	            .claim("otp", otp)
+	            .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000)) // 5 min expiry
+	            .signWith(key,SignatureAlgorithm.HS256)
+	            .compact();
+	}
+
 
 	public String getUserNameFromJwtToken(Claims claims) {
 		log.debug("Extracting username from JWT claims");
@@ -80,6 +102,24 @@ public class JwtUtils {
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwtToken).getBody();
 		return claims;
 	}
+	
+	public boolean verifyOtp(VerifyOtpReq req) {
+
+	    Claims claims = Jwts.parserBuilder()
+	            .setSigningKey(key)
+	            .build()
+	            .parseClaimsJws(req.getOtpToken())
+	            .getBody();
+
+	    String tokenEmail = claims.getSubject();
+	    String tokenOtp = (String) claims.get("otp");
+
+	    if (!tokenEmail.equals(req.getEmail()))
+	        throw new RuntimeException("Email mismatch");
+
+	    return tokenOtp.equals(req.getOtp());
+	}
+
 
 	private String getAuthoritiesInString(Collection<? extends GrantedAuthority> authorities) {
 		log.debug("Converting authorities to string...");
@@ -114,5 +154,26 @@ public class JwtUtils {
 		return token;
 
 	}
+	
+	public String resetPassword(ResetPasswordReq req) {
+
+	    Claims claims = Jwts.parserBuilder()
+	            .setSigningKey(key)
+	            .build()
+	            .parseClaimsJws(req.getOtpToken())
+	            .getBody();
+
+	    if (!claims.getSubject().equals(req.getEmail()))
+	        throw new RuntimeException("Email mismatch");
+
+	    User user = userRepo.findByEmail(req.getEmail())
+	            .orElseThrow(() -> new RuntimeException("User not found"));
+
+	    user.setPassword(passwordEncoder.encode(req.getNewPassword()));
+	    userRepo.save(user);
+
+	    return "Password updated successfully";
+	}
+
 
 }
