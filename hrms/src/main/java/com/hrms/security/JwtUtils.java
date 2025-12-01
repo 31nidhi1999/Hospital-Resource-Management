@@ -165,6 +165,11 @@ public class JwtUtils {
 
 	    if (!claims.getSubject().equals(req.getEmail()))
 	        throw new RuntimeException("Email mismatch");
+	    
+	    Date expiration = claims.getExpiration();
+	    if (expiration.before(new Date())) {
+	        throw new RuntimeException("OTP token expired");
+	    }
 
 	    User user = userRepo.findByEmail(req.getEmail())
 	            .orElseThrow(() -> new RuntimeException("User not found"));

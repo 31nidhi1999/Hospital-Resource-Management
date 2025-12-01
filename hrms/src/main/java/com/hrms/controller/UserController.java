@@ -2,6 +2,7 @@ package com.hrms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hrms.custom_exceptions.ApiException;
 import com.hrms.dto.req.ForgetPasswordReq;
 import com.hrms.dto.req.ResetPasswordReq;
 import com.hrms.dto.req.SignInReqDto;
@@ -52,12 +54,27 @@ public class UserController {
 	}
 	
 	@PostMapping("/forgot-password")
-    public ResponseEntity<ForgetPasswordRes> forgotPassword(@RequestBody ForgetPasswordReq req) {
-        return ResponseEntity.ok(service.forgotPassword(req));
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgetPasswordReq req) {
+		try {
+	        ForgetPasswordRes res = service.forgotPassword(req);
+	        return ResponseEntity.ok(res);
+
+	    } catch (Exception e) {
+	        return ResponseEntity
+	                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Server error: " + e.getMessage());
+	    }
     }
 
     @PostMapping("/verify-otp")
     public ResponseEntity<VerifyOtpRes> verifyOtp(@RequestBody VerifyOtpReq req) {
+    	VerifyOtpRes res = service.verifyOtp(req);
+
+        if (!res.isValid()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(res);
+        }
         return ResponseEntity.ok(service.verifyOtp(req));
     }
 
