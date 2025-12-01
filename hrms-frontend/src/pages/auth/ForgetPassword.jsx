@@ -12,12 +12,18 @@ export default function ForgotPassword() {
     try {
         console.log(email);
       const res = await sendOtp({email});
+
+      if (!res || !res.otpToken) {
+      alert("OTP generation failed. Try again.");
+      return; 
+    }
       localStorage.setItem("fp_email", email);
       localStorage.setItem("fp_token", res.otpToken);
 
       setShowOtp(true);
     } catch (err) {
       alert("Failed to generate OTP");
+      return;
     }
   };
 
@@ -44,6 +50,7 @@ export default function ForgotPassword() {
       navigate("/reset-password");
     } catch (err) {
       alert("OTP verification failed");
+      navigate("/login")
     }
   };
 
