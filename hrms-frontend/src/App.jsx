@@ -15,8 +15,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AddResource from './pages/admin/AddResource'
 import RaisedRequest from './pages/doctor/RaisedRequest'
 import ResourceAllocation from './pages/admin/ResourceAllocation'
-import ForgotPassword from './pages/auth/ForgetPassword'
-import ResetPassword from './pages/auth/ResetPassword'
 
 function App() {
 
@@ -28,8 +26,6 @@ function App() {
             <Route path="/" element={<Login/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register/>}/>
-            <Route path="/forgot-password" element={<ForgotPassword/>}/>
-            <Route path="/reset-password" element={<ResetPassword/>}/>
 
             <Route path="/doctor/dashboard" element={<ProtectedRoute role="DOCTOR"><DoctorDashboard/></ProtectedRoute>}/>
             <Route path="/doctor/schedule/:id" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
