@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import {LogIn} from "lucide-react";
+import { LogIn } from "lucide-react";
 
 export default function Login() {
 
@@ -12,8 +12,8 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-           await login(form)
-        } catch(err) {
+            await login(form)
+        } catch (err) {
             setError(err.message);
         }
     };
@@ -37,7 +37,7 @@ export default function Login() {
                         placeholder="Email"
                         className="w-full px-4 py-2 border rounded-lg bg-[#F7F9FC] focus:ring-2 focus:ring-indigo-200"
                         value={form.userName}
-                        onChange={(e) => setForm({...form, userName: e.target.value})}
+                        onChange={(e) => setForm({ ...form, userName: e.target.value })}
                         required
                     />
 
@@ -46,7 +46,7 @@ export default function Login() {
                         placeholder="Password"
                         className="w-full px-4 py-2 border rounded-lg bg-[#F7F9FC] focus:ring-2 focus:ring-indigo-200"
                         value={form.password}
-                        onChange={(e) => setForm({...form, password: e.target.value})}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
                         required
                     />
 
@@ -54,7 +54,7 @@ export default function Login() {
                         type="submit"
                         className="w-full p-2 bg-green-600 text-white rounded flex items-center justify-center gap-2"
                     >
-                        <LogIn size={18}/>Login
+                        <LogIn size={18} />Login
                     </button>
 
                 </form>
@@ -63,6 +63,14 @@ export default function Login() {
                     No account? <Link to="/register" className="text-indigo-600">Register</Link>
                 </p>
 
+                <div className="text-right mt-2">
+                    <Link
+                        to="/forgot-password"
+                        className="text-blue-600 text-sm hover:underline"
+                    >
+                        Forgot Password?
+                    </Link>
+                </div>
             </div>
         </div>
     );

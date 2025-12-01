@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 @Configuration
 @Slf4j
+@EnableAsync
 public class SecurityConfig {
 	
 	@Autowired
@@ -44,6 +46,9 @@ public class SecurityConfig {
 	                "/swagger-resources/**",
 	                "/webjars/**",
 	                "/api/users/login",
+	                "/api/users/forgot-password",
+	                "/api/users/verify-otp",
+	                "/api/users/reset-password",
 	                "/api/doctors/register",
 	                "/api/patients/register",
 	                "/api/admins/register"
