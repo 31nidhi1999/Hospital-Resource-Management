@@ -66,7 +66,6 @@ public class AdminDaoImpl implements AdminDao {
 	            .orElseThrow(() -> new ResourceNotFoundException("Admin not found for id : " + userId));
 		 
 		modelMapper.map(dto, admin);
-		admin.setPassword(encoder.encode(dto.getPassword()));
 		log.debug("Mapped adminReqDto to existing admin entity for ID: ", userId);
 		
 		User admin2 = adminRepo.save(admin);

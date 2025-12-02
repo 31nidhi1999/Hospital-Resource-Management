@@ -67,7 +67,7 @@ public class DoctorDaoImpl implements DoctorDao {
 		
 		
 		modelMapper.map(dto, doctor);
-		doctor.setPassword(encoder.encode(dto.getPassword()));
+
 		log.debug("Mapped DoctorReqDto to Doctor entity for ID: ", docId);
 		
 		Doctor savedDoctor = doctorRepo.save(doctor);

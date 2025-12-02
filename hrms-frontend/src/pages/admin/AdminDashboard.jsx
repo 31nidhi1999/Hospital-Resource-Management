@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ClipboardList,CalendarCheck,UserPlus,UserMinus,UserCog,PlusCircle   } from "lucide-react"
+import { ClipboardList,CalendarCheck,UserPlus,UserMinus,UserCog,PlusCircle,UserPen   } from "lucide-react"
 
 export default function AdminDashboard() {
     return (
@@ -52,6 +52,14 @@ export default function AdminDashboard() {
                     <PlusCircle size={32} className="text-indigo-600" />
                     <span className="text-lg font-semibold text-gray-800">
                         Add Resource
+                    </span>
+                </Link>
+
+                <Link to="/admin/update-admin-details"
+                    className="p-6 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-4">
+                    <UserPen size={32} className="text-indigo-600" />
+                    <span className="text-lg font-semibold text-gray-800">
+                        Update Admin Deatils
                     </span>
                 </Link>
             </div>
