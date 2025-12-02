@@ -62,7 +62,6 @@ public class SecurityConfig {
 	            		"/api/resources/delete/**",
 	            		"/api/doctors/delete/**",
 	            		"/api/doctors/list",
-	            		"/api/patients/list",
 	            		"/api/patients/delete/**",
 	            		"/api/requests/list",
 	            		"/api/requests/id/**",
@@ -74,16 +73,16 @@ public class SecurityConfig {
 	            		"/api/admissions/id/**")
 	            .hasAuthority("ADMIN")
 	            .requestMatchers("/api/doctors/update/**",
-	            		"/id/**",
 	            		"/api/schedules/id/**",
 	            		"/api/requests/create",
-	            		"/api/treatments/**")
+	            		"/api/treatments/create")
 	            .hasAuthority("DOCTOR")
+	            .requestMatchers("/api/patients/update/**")
+	            .hasAuthority("PATIENT")
 				.requestMatchers("/api/admissions/list", "/api/resources/list")
 				.hasAnyAuthority("ADMIN", "DOCTOR")
-//	            .requestMatchers("/api/patients/update/**",
-//	            		"/id/**")
-//	            .hasAuthority("PATIENT")
+				.requestMatchers("/api/treatments/list").hasAnyAuthority("ADMIN", "DOCTOR", "PATIENT")
+				.requestMatchers("/api/patients/list").hasAnyAuthority("ADMIN", "DOCTOR")
 	            .anyRequest().authenticated()
 	        )
 	        .formLogin(form -> form.disable())

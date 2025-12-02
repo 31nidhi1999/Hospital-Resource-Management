@@ -21,6 +21,7 @@ import UpdateDoctor from './pages/doctor/UpdateDoctor'
 import UpdateAdmin from './pages/admin/UpdateAdmin'
 import UpdatePatient from './pages/patient/UpdatePatient'
 import PatientDashboard from './pages/patient/PatientDashboard'
+import TreatmentPage from './pages/doctor/TreatmentPage'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="/doctor/schedule" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
             <Route path="/doctor/request-resource" element={<ProtectedRoute role="DOCTOR"><RaisedRequest/></ProtectedRoute>}/>
             <Route path="/doctor/update-doctor-details" element={<ProtectedRoute role="DOCTOR"><UpdateDoctor/></ProtectedRoute>}/>
+             <Route path="/doctor/create-treatment" element={<ProtectedRoute role="DOCTOR"><TreatmentPage/></ProtectedRoute>}/>
 
             /**Schedule */
             <Route path="/admin/resource-requests" element={<ProtectedRoute role="ADMIN"><ResourceAllocation/></ProtectedRoute>}/>
