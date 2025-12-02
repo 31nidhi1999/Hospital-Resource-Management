@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
 
         setUser(userData)
         console.log(user);
-        if (user.role === 'ADMIN') navigate('/admin/dashboard')
-        else if (user.role === 'DOCTOR') navigate('/doctor/dashboard')
-        else if (user.role === 'PATIENT') navigate('/patient/dashboard')
+        if (userData.role === 'ADMIN') navigate('/admin/dashboard')
+        else if (userData.role === 'DOCTOR') navigate('/doctor/dashboard')
+        else if (userData.role === 'PATIENT') navigate('/patient/dashboard')
         else navigate("/");
     }
 

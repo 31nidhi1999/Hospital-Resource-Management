@@ -17,6 +17,10 @@ import RaisedRequest from './pages/doctor/RaisedRequest'
 import ResourceAllocation from './pages/admin/ResourceAllocation'
 import ForgotPassword from './pages/auth/ForgetPassword'
 import ResetPassword from './pages/auth/ResetPassword'
+import UpdateDoctor from './pages/doctor/UpdateDoctor'
+import UpdateAdmin from './pages/admin/UpdateAdmin'
+import UpdatePatient from './pages/patient/UpdatePatient'
+import PatientDashboard from './pages/patient/PatientDashboard'
 
 function App() {
 
@@ -31,9 +35,13 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/reset-password" element={<ResetPassword/>}/>
 
+            <Route path="/patient/dashboard" element={<ProtectedRoute role="PATIENT"><PatientDashboard/></ProtectedRoute>}/>
+            <Route path="/patient/update-patient-details" element={<ProtectedRoute role="PATIENT"><UpdatePatient/></ProtectedRoute>}/>
+
             <Route path="/doctor/dashboard" element={<ProtectedRoute role="DOCTOR"><DoctorDashboard/></ProtectedRoute>}/>
             <Route path="/doctor/schedule" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
             <Route path="/doctor/request-resource" element={<ProtectedRoute role="DOCTOR"><RaisedRequest/></ProtectedRoute>}/>
+            <Route path="/doctor/update-doctor-details" element={<ProtectedRoute role="DOCTOR"><UpdateDoctor/></ProtectedRoute>}/>
 
             /**Schedule */
             <Route path="/admin/resource-requests" element={<ProtectedRoute role="ADMIN"><ResourceAllocation/></ProtectedRoute>}/>
@@ -43,6 +51,7 @@ function App() {
             <Route path="/admin/discharge" element={<ProtectedRoute  role="ADMIN"><DischargePatient/></ProtectedRoute>}/>
             <Route path="/admin/approve-doctors" element={<ProtectedRoute role="ADMIN"><ApproveDoctor/></ProtectedRoute>}/>
             <Route path="/admin/add-resource" element={<ProtectedRoute role="ADMIN"><AddResource/></ProtectedRoute>}/>
+            <Route path="/admin/update-admin-details" element={<ProtectedRoute role="ADMIN"><UpdateAdmin/></ProtectedRoute>}/>
           </Routes>
       </div>
     </div>
