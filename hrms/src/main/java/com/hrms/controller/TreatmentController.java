@@ -57,4 +57,16 @@ public class TreatmentController {
         treatmentDao.deleteTreatment(id);
         return ResponseEntity.ok(new ApiResponse("Treatment deleted successfully " + id));
 	}
+	
+	@GetMapping("/patient/{id}")
+	public ResponseEntity<?> getTreatmentByPatientId(@PathVariable Long id){
+		log.info("Fetching treatment for patient with ID: {}", id);
+        return ResponseEntity.ok(treatmentDao.getTreatmentByPatientId(id));
+	}
+	
+	@GetMapping("/doctor/{id}")
+	public ResponseEntity<?> getTreatmentByDoctorId(@PathVariable Long id){
+		log.info("Fetching treatment for doctor with ID: {}", id);
+        return ResponseEntity.ok(treatmentDao.getTreatmentByDoctorId(id));
+	}
 }

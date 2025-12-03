@@ -98,7 +98,7 @@ public class TreatmentDaoImpl implements TreatmentDao {
 	public TreatmentResDto updateTreatment(Long id, TreatmentReqDto dto) {
 		log.info("Updating treatment for patient ID: {}", dto.getPatient_id());
 		
-		if(treatmentRepo.existsById(id)) {
+		if(!treatmentRepo.existsById(id)) {
 			throw new ApiException("Invalid doctor ID: " + id);
 		}
 
@@ -129,5 +129,49 @@ public class TreatmentDaoImpl implements TreatmentDao {
         treatmentRepo.delete(treatment);
         log.info("Treatment deleted successfully with ID: ", id);
 		
+	}
+
+	@Override
+	public List<TreatmentResDto> getTreatmentByPatientId(Long id) {
+		log.info("Fetching treatment for patient with ID: {}", id);
+		
+		if(!patientRepo.existsById(id)) {
+			throw new ApiException("Invalid patient ID: " + id);
+		}
+		
+		List<TreatmentResDto>  patientTreatmentList = treatmentRepo.findByPatient_Id(id).stream().map(t->modelMapper.map(t, TreatmentResDto.class))
+		.collect(Collectors.toList());
+		
+		log.debug("Total treatment found: ", patientTreatmentList.size());
+
+	    if (patientTreatmentList.isEmpty()) {
+	    	log.warn("No treatment found in the database!");
+	    } else {
+	    	log.info("Successfully fetched treatment list.", patientTreatmentList.size());
+	    }
+		
+		return patientTreatmentList;
+	}
+
+	@Override
+	public List<TreatmentResDto> getTreatmentByDoctorId(Long id) {
+		log.info("Fetching treatment for doctor with ID: {}", id);
+		
+		if(!doctorRepo.existsById(id)) {
+			throw new ApiException("Invalid doctor ID: " + id);
+		}
+		
+		List<TreatmentResDto> doctorTreatmentList = treatmentRepo.findByDoctor_Id(id).stream()
+				.map(t -> modelMapper.map(t, TreatmentResDto.class)).collect(Collectors.toList());
+		
+		log.debug("Total treatment found: ", doctorTreatmentList.size());
+
+	    if (doctorTreatmentList.isEmpty()) {
+	    	log.warn("No treatment found in the database!");
+	    } else {
+	    	log.info("Successfully fetched treatment list.", doctorTreatmentList.size());
+	    }
+		
+		return doctorTreatmentList;
 	}
 }

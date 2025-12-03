@@ -2,7 +2,7 @@ import api from "./axios";
 
 export const getAllPatient = async () => {
     try {
-        const response = await api.get('/patients/list');
+        const response = await api.get("/patients/list");
         return response.data;
     } catch (error) {
         console.error("Enable to fetch Patient from System:", error);
@@ -78,4 +78,24 @@ export const getAllRequest = async()=>{
         console.error("Failed to fetch resource request list:", error);
         throw error;
     }
+}
+
+export const getAllTreatment = async()=>{
+    try{
+       const res = await  api.get('/treatments/list');
+       return res.data;
+    }catch(error){
+        console.error("Failed to fetch treatment list:", error);
+        throw error;
+    }
+}
+
+export const getTreatmentByPatientId = async(id)=>{
+       const res = await  api.get(`/treatments/patient/${id}`);
+       return res.data;
+}
+
+export const getTreatmentByDoctorId = async(id)=>{
+       const res = await  api.get(`/treatments/doctor/${id}`);
+       return res.data;
 }

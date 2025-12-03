@@ -15,7 +15,9 @@ public class TreatmentResDto {
     
     private Long doctorId;
     private String doctorFirstName;
+    private String doctorLastName;
     
     private Long patientId;
     private String patientFirstName;
+    private String patientLastName;
 }
