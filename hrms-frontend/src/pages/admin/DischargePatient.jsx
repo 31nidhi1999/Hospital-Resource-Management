@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllAdmitedlist } from "../../api/List";
+import { getAllActiveAdmitedlist } from "../../api/List";
 import { dischargePatient } from "../../api/Patient";
 import { formatDate } from "../../helper/formateDate";
 
@@ -16,7 +16,7 @@ export default function DischargePatient() {
 
     const loadList = async () => {
         try {
-            const list = await getAllAdmitedlist();
+            const list = await getAllActiveAdmitedlist();
             setAdmitedList(list);
         } catch (err) {
             console.error("Error loading admisiion list", err);
