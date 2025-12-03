@@ -27,7 +27,8 @@ export default function Register() {
                 navigate('/status/success');
             } catch (err) {
                 if(err?.response?.status === 500){
-                    navigate('/status/exist')
+                    navigate('/status/exist');
+                    return;
                 }
                 navigate("/status/error")
             }
@@ -39,7 +40,8 @@ export default function Register() {
                 navigate('/status/success');
             } catch (err) {
                 if(err?.response?.status === 500){
-                    navigate('/status/exist')
+                    navigate('/status/exist');
+                    return;
                 }
                 navigate("/status/error")
             }

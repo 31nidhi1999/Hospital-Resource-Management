@@ -42,9 +42,9 @@ function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/reset-password" element={<ResetPassword/>}/>
-            <Route path="/reset-password" element={<SuccessUserRegisteredPage/>}/>
-            <Route path="/reset-password" element={<ExistedUser/>}/>
-            <Route path="/reset-password" element={<SomethingWentWrong/>}/>
+            <Route path="/status/success" element={<SuccessUserRegisteredPage/>}/>
+            <Route path="/status/exist" element={<ExistedUser/>}/>
+            <Route path="/status/error" element={<SomethingWentWrong/>}/>
 
             <Route path="/patient/dashboard" element={<ProtectedRoute role="PATIENT"><PatientDashboard/></ProtectedRoute>}/>
             <Route path="/patient/update-patient-details" element={<ProtectedRoute role="PATIENT"><UpdatePatient/></ProtectedRoute>}/>
