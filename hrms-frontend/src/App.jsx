@@ -28,6 +28,7 @@ import DoctorTreatmentList from './pages/doctor/DoctorTreatmentList'
 import PatientAdmittedHistory from './pages/patient/PatinetAdmittedHistory'
 import DoctorAdmittedHistory from './pages/doctor/DoctorAdmittedHistory'
 import AllAdmissionHisory from './pages/admin/AllAdmissionHistory'
+import { ExistedUser, SomethingWentWrong, SuccessUserRegisteredPage } from './utils/Status'
 
 function App() {
 
