@@ -57,7 +57,7 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 	public List<AdmissionResDto> listAllAdmission() {
 		log.info("Fetching all admissions ...");
 		
-		List<AdmissionResDto> allAdmission = admissionRepo.findAll()
+		List<AdmissionResDto> allAdmission = admissionRepo.findAllByIsActiveFalse()
 														.stream()
 														.map(a -> modelMapper.map(a, AdmissionResDto.class))
 														.collect(Collectors.toList());
@@ -140,5 +140,63 @@ public class AdmissionDaoImpl implements AdmisssionDao {
 
             log.info("Resource {} deallocated from admission {}", resource.getId(), id);
         }
+	}
+
+	@Override
+	public List<AdmissionResDto> getAdmissionByDoctorId(Long id) {
+		log.info("Fetching all admissions ...");
+		
+		if(!doctorRepo.existsById(id)) {
+			throw new ApiException("Invalid doctor ID: " + id);
+		}
+
+		List<AdmissionResDto> allAdmission = admissionRepo.findByDoctor_Id(id).stream()
+				.map(a -> modelMapper.map(a, AdmissionResDto.class)).collect(Collectors.toList());
+
+		log.debug("Total Admission found: ", allAdmission.size());
+		if (allAdmission.isEmpty()) {
+			log.warn("No Addmission found in the database!");
+		} else {
+			log.info("Successfully fetched Admission list.", allAdmission.size());
+		}
+		return allAdmission;
+	}
+
+	@Override
+	public List<AdmissionResDto> getAdmissionByPatientId(Long id) {
+		log.info("Fetching all admissions ...");
+		
+		if(!patientRepo.existsById(id)) {
+			throw new ApiException("Invalid patient ID: " + id);
+		}
+
+		List<AdmissionResDto> allAdmission = admissionRepo.findByPatient_Id(id).stream()
+				.map(a -> modelMapper.map(a, AdmissionResDto.class)).collect(Collectors.toList());
+
+		log.debug("Total Admission found: ", allAdmission.size());
+		if (allAdmission.isEmpty()) {
+			log.warn("No Addmission found in the database!");
+		} else {
+			log.info("Successfully fetched Admission list.", allAdmission.size());
+		}
+		return allAdmission;
+	}
+
+	@Override
+	public List<AdmissionResDto> getAllActiveAdmission() {
+	log.info("Fetching all admissions ...");
+			
+			List<AdmissionResDto> allAdmission = admissionRepo.findAllByIsActiveTrue()
+															.stream()
+															.map(a -> modelMapper.map(a, AdmissionResDto.class))
+															.collect(Collectors.toList());
+			
+			log.debug("Total Admission found: ", allAdmission.size());
+			if(allAdmission.isEmpty()) {
+				log.warn("No Addmission found in the database!");
+			}else {
+				log.info("Successfully fetched Admission list.", allAdmission.size());
+			}
+			return allAdmission;
 	}	
 }

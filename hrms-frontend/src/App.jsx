@@ -25,6 +25,9 @@ import TreatmentPage from './pages/doctor/TreatmentPage'
 import TreatmentList from './pages/patient/TreatmentList'
 import AllTreatmentList from './pages/admin/AllTreatmentList'
 import DoctorTreatmentList from './pages/doctor/DoctorTreatmentList'
+import PatientAdmittedHistory from './pages/patient/PatinetAdmittedHistory'
+import DoctorAdmittedHistory from './pages/doctor/DoctorAdmittedHistory'
+import AllAdmissionHisory from './pages/admin/AllAdmissionHistory'
 
 function App() {
 
@@ -42,6 +45,7 @@ function App() {
             <Route path="/patient/dashboard" element={<ProtectedRoute role="PATIENT"><PatientDashboard/></ProtectedRoute>}/>
             <Route path="/patient/update-patient-details" element={<ProtectedRoute role="PATIENT"><UpdatePatient/></ProtectedRoute>}/>
             <Route path="/patient/treatment-history" element={<ProtectedRoute role="PATIENT"><TreatmentList/></ProtectedRoute>}/>
+            <Route path="/patient/admission-history" element={<ProtectedRoute role="PATIENT"><PatientAdmittedHistory/></ProtectedRoute>}/>
 
             <Route path="/doctor/dashboard" element={<ProtectedRoute role="DOCTOR"><DoctorDashboard/></ProtectedRoute>}/>
             <Route path="/doctor/schedule" element={<ProtectedRoute role="DOCTOR"><DoctorSchedule/></ProtectedRoute>}/>
@@ -49,6 +53,7 @@ function App() {
             <Route path="/doctor/update-doctor-details" element={<ProtectedRoute role="DOCTOR"><UpdateDoctor/></ProtectedRoute>}/>
              <Route path="/doctor/create-treatment" element={<ProtectedRoute role="DOCTOR"><TreatmentPage/></ProtectedRoute>}/>
              <Route path="/doctor/treatment-history" element={<ProtectedRoute role="DOCTOR"><DoctorTreatmentList/></ProtectedRoute>}/>
+             <Route path="/doctor/admission-history" element={<ProtectedRoute role="DOCTOR"><DoctorAdmittedHistory/></ProtectedRoute>}/>
 
             /**Schedule */
             <Route path="/admin/resource-requests" element={<ProtectedRoute role="ADMIN"><ResourceAllocation/></ProtectedRoute>}/>
@@ -60,6 +65,7 @@ function App() {
             <Route path="/admin/add-resource" element={<ProtectedRoute role="ADMIN"><AddResource/></ProtectedRoute>}/>
             <Route path="/admin/update-admin-details" element={<ProtectedRoute role="ADMIN"><UpdateAdmin/></ProtectedRoute>}/>
             <Route path="/admin/treatment-history" element={<ProtectedRoute role="ADMIN"><AllTreatmentList/></ProtectedRoute>}/>
+            <Route path="/admin/admission-history" element={<ProtectedRoute role="ADMIN"><AllAdmissionHisory/></ProtectedRoute>}/>
           </Routes>
       </div>
     </div>

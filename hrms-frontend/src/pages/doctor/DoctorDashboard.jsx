@@ -45,6 +45,14 @@ export default function DoctorDashboard(){
                         Treatment List
                     </span>
                 </Link>
+
+                <Link to="/doctor/admission-history"
+                    className="p-6 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-4">
+                    <History size={32} className="text-indigo-600" />
+                    <span className="text-lg font-semibold text-gray-800">
+                        Admission List
+                    </span>
+                </Link>
             </div>
         </div>
     )

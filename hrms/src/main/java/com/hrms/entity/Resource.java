@@ -49,6 +49,6 @@ public class Resource {
 	
 	private Boolean isAvailable = true;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
+	@OneToMany(mappedBy = "resource",cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
 	private List<ResourceRequest> resourceRequests = new ArrayList<>();
 }

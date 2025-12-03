@@ -10,4 +10,7 @@ public interface AdmisssionDao {
 	AdmissionResDto getAdmissionById(long id);
 	AdmissionResDto admitPatient(AdmissionReqDto dto);
 	void dischargePatient(Long id);
+	List<AdmissionResDto> getAdmissionByDoctorId(Long id);
+	List<AdmissionResDto> getAdmissionByPatientId(Long id);
+	List<AdmissionResDto> getAllActiveAdmission();
 }

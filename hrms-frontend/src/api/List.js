@@ -20,6 +20,21 @@ export const getAllAdmitedlist= async()=>{
     }
 }
 
+export const getAllActiveAdmitedlist= async()=>{
+        const response = await api.get("/admissions/active/list");
+        return response.data;
+}
+
+export const getAllAdmissionByPatientId= async(id)=>{
+        const response = await api.get(`/admissions/patient/${id}`);
+        return response.data;
+}
+
+export const getAllAdmissionByDoctorId= async(id)=>{
+        const response = await api.get(`/admissions/doctor/${id}`);
+        return response.data;
+}
+
 export const getAllDoctor = async () => {
     try {
         const response = await api.get('/doctors/list');

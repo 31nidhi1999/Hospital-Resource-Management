@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllAdmission, resourceList } from "../../api/List";
+import { getAllActiveAdmitedlist, resourceList } from "../../api/List";
 import { raisedRequest } from "../../api/Resource";
 
 export default function RaisedRequest() {
@@ -30,7 +30,7 @@ export default function RaisedRequest() {
 
     const laodAdmission = async () => {
         try {
-            const list = await getAllAdmission();
+            const list = await getAllActiveAdmitedlist();
             setAdmissions(list);
             console.log(list);
         } catch (err) {

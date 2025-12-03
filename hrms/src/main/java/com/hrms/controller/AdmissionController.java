@@ -61,4 +61,25 @@ public class AdmissionController {
 		admisssionDao.dischargePatient(id);
 		return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Patient discharge successfully" + id));
 	}
+	
+	@GetMapping("/patient/{id}")
+	public ResponseEntity<List<AdmissionResDto>> getAdmissionByPatientId(@PathVariable Long id){
+		log.info("Fetching admission with ID: {}", id);
+		List<AdmissionResDto> admissionResDto = admisssionDao.getAdmissionByPatientId(id);
+		return ResponseEntity.ok(admissionResDto);
+	}
+	
+	@GetMapping("/doctor/{id}")
+	public ResponseEntity<List<AdmissionResDto>> getAdmissionByDoctorId(@PathVariable Long id){
+		log.info("Fetching admission with ID: {}", id);
+		List<AdmissionResDto> admissionResDto = admisssionDao.getAdmissionByDoctorId(id);
+		return ResponseEntity.ok(admissionResDto);
+	}
+	
+	@GetMapping("/active/list")
+	public ResponseEntity<List<AdmissionResDto>> getAllActiveAdmission(){
+		log.info("Fetching all admission ...");
+		 List<AdmissionResDto> listAll = admisssionDao.getAllActiveAdmission();
+		return ResponseEntity.ok(listAll);
+	}
 }
