@@ -71,7 +71,6 @@ public class SecurityConfig {
 	            		"/api/schedules/generate",
 	            		"/api/admissions/create",
 	            		"/api/admissions/list",
-	            		"/api/admissions/active/list",
 	            		"/api/admissions/id/**",
 	            		"/api/treatments/list")
 	            .hasAuthority("ADMIN")
@@ -82,9 +81,11 @@ public class SecurityConfig {
 	            		"/api/treatments/doctor/**",
 	            		"/api/admissions/doctor/**")
 	            .hasAuthority("DOCTOR")
-	            .requestMatchers("/api/patients/update/**","/api/admissions/patient/**","/api/treatments/patient/**")
+	            .requestMatchers("/api/patients/update/**",
+	            		"/api/admissions/patient/**",
+	            		"/api/treatments/patient/**")
 	            .hasAuthority("PATIENT")
-				.requestMatchers( "/api/resources/list")
+				.requestMatchers( "/api/resources/list","/api/admissions/active/list")
 				.hasAnyAuthority("ADMIN", "DOCTOR")
 				.requestMatchers("/api/patients/list").hasAnyAuthority("ADMIN", "DOCTOR")
 	            .anyRequest().authenticated()
