@@ -10,5 +10,7 @@ public interface TreatmentDao {
     TreatmentResDto getTreatmentById(Long id);
     List<TreatmentResDto> getAllTreatments();
     TreatmentResDto updateTreatment(Long id, TreatmentReqDto dto);
+    List<TreatmentResDto> getTreatmentByPatientId(Long id);
+    List<TreatmentResDto> getTreatmentByDoctorId(Long id);
     void deleteTreatment(Long id);
 }

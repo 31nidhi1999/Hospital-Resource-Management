@@ -89,3 +89,13 @@ export const getAllTreatment = async()=>{
         throw error;
     }
 }
+
+export const getTreatmentByPatientId = async(id)=>{
+       const res = await  api.get(`/treatments/patient/${id}`);
+       return res.data;
+}
+
+export const getTreatmentByDoctorId = async(id)=>{
+       const res = await  api.get(`/treatments/doctor/${id}`);
+       return res.data;
+}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ClipboardList,CalendarCheck,UserPen } from "lucide-react";
+import { ClipboardList,CalendarCheck,UserPen,History } from "lucide-react";
 
 export default function DoctorDashboard(){
     return(
@@ -35,6 +35,14 @@ export default function DoctorDashboard(){
                     <UserPen size={32} className="text-indigo-600" />
                     <span className="text-lg font-semibold text-gray-800">
                         Register Treatment
+                    </span>
+                </Link>
+
+                <Link to="/doctor/treatment-history"
+                    className="p-6 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow hover:shadow-lg hover:-translate-y-1 transition-all flex items-center gap-4">
+                    <History size={32} className="text-indigo-600" />
+                    <span className="text-lg font-semibold text-gray-800">
+                        Treatment List
                     </span>
                 </Link>
             </div>
