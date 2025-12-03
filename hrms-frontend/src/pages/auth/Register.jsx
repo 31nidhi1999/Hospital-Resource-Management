@@ -24,30 +24,38 @@ export default function Register() {
         if (role === 'ADMIN') {
             try {
                 const res = await registerAdmin(form)
-                navigate('/login');
-                console.log(res)
+                navigate('/status/success');
             } catch (err) {
-                alert("Error registering admin");
+                if(err?.response?.status === 500){
+                    navigate('/status/exist')
+                }
+                navigate("/status/error")
             }
         }
 
         if (role === 'DOCTOR') {
             try {
                 const res = await registerDoctor(payload)
-                navigate('/login');
-                console.log(res)
+                navigate('/status/success');
             } catch (err) {
-                alert("Error registering doctor");
+                if(err?.response?.status === 500){
+                    navigate('/status/exist')
+                }
+                navigate("/status/error")
             }
         }
 
         if (role === 'PATIENT') {
             try {
                 const res = await registerPatient(payload)
-                navigate('/login');
-                console.log(res)
+                navigate('/status/success');
             } catch (err) {
-                alert("Error registering Patient");
+                console.log(err?.response?.status)
+                if(err?.response?.status === 500){
+                    navigate('/status/exist');
+                    return;
+                }
+                navigate("/status/error")
             }
         }
 

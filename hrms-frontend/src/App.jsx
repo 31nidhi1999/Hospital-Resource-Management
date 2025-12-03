@@ -35,12 +35,15 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Navbar/>
       <div className="container mx-auto p-4">
-          <Routes>
+        <Routes>
             <Route path="/" element={<Login/>}/>
-            <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register/>}/>
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/reset-password" element={<ResetPassword/>}/>
+            <Route path="/reset-password" element={<SuccessUserRegisteredPage/>}/>
+            <Route path="/reset-password" element={<ExistedUser/>}/>
+            <Route path="/reset-password" element={<SomethingWentWrong/>}/>
 
             <Route path="/patient/dashboard" element={<ProtectedRoute role="PATIENT"><PatientDashboard/></ProtectedRoute>}/>
             <Route path="/patient/update-patient-details" element={<ProtectedRoute role="PATIENT"><UpdatePatient/></ProtectedRoute>}/>
@@ -66,7 +69,7 @@ function App() {
             <Route path="/admin/update-admin-details" element={<ProtectedRoute role="ADMIN"><UpdateAdmin/></ProtectedRoute>}/>
             <Route path="/admin/treatment-history" element={<ProtectedRoute role="ADMIN"><AllTreatmentList/></ProtectedRoute>}/>
             <Route path="/admin/admission-history" element={<ProtectedRoute role="ADMIN"><AllAdmissionHisory/></ProtectedRoute>}/>
-          </Routes>
+        </Routes>
       </div>
     </div>
   )
