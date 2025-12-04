@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { getAllPatient } from "../../api/List";
-import {createTreatmnet} from "../../api/treatment";
+import { createTreatmnet } from "../../api/treatment";
 import { getLoggedInUserId } from "../auth/auth";
 import { useNavigate } from "react-router-dom";
+import { goToStatus } from "../../utils/goToStatus";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function TreatmentPage() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
-  const {navigate} = useNavigate();
   const [patients, setPatients] = useState([]);
   const [form, setForm] = useState({
     diagnosis: "",
@@ -18,11 +21,17 @@ export default function TreatmentPage() {
 
   useEffect(() => {
     const fetchPatients = async () => {
+      setLoading(true)
       try {
-        const res = await getAllPatient();
+        const list = await getAllPatient();
+        if (!list || list.length === 0) {
+          return goToStatus(navigate, "emptyDoctor");
+        }
         setPatients(res);
       } catch (err) {
-        console.error("Failed to fetch patients:", err);
+        goToStatus(navigate, "errorDoctor")
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -43,7 +52,7 @@ export default function TreatmentPage() {
       console.error(err);
     }
   };
-
+  if (loading) return <FullScreenLoader />
   return (
     <div className="min-h-screen p-10 bg-gradient-to-br from-indigo-50 to-blue-100">
       <h2 className="text-3xl font-bold text-indigo-800 mb-6">Add Treatment</h2>

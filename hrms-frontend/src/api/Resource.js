@@ -1,13 +1,8 @@
 import api from "./axios";
 
 export const addResource = async (data) => {
-    try {
         const res = await api.post("/resources/register", data);
         return res.data;
-    } catch (err) {
-        console.error("Adding resource  failed:", err);
-        throw err;
-    }
 }
 
 export const raisedRequest = async (data) => {

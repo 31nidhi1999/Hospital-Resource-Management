@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { getAllActiveAdmitedlist, resourceList } from "../../api/List";
 import { raisedRequest } from "../../api/Resource";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function RaisedRequest() {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [resources, setResources] = useState([]);
     const [admissions, setAdmissions] = useState([]);
      const [paylaod, setPayload] = useState({ patient_id: '', doctor_id: ' ', resource_id:' ',admission_id:' '})
@@ -21,10 +26,12 @@ export default function RaisedRequest() {
     const laodResources = async () => {
         try {
             const list = await resourceList();
+            if (!list || list.length === 0) {
+                return goToStatus(navigate, "emptyDoctor");
+            }
             setResources(list);
-            console.log(list);
         } catch (err) {
-            console.error("Error loading doctors", err);
+            goToStatus(navigate, "errorDoctor");
         }
     }
 
@@ -38,10 +45,12 @@ export default function RaisedRequest() {
         }
     }
     useEffect(() => {
+        setLoading(true)
         laodAdmission();
         laodResources();
+        setLoading(false);
     }, []);
-
+    if(loading) return <FullScreenLoader/>
     return (
         <div className="max-w-lg bg-white p-6 rounded shadow">
             <h3 className="text-xl mb-3">Raised Request</h3>
