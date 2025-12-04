@@ -2,6 +2,7 @@ import { useState } from "react";
 import { registerAdmin, registerDoctor, registerPatient } from "../../api/registerUser";
 import { User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { goToStatus } from "../../utils/goToStatus";
 
 export default function Register() {
     const [role, setRole] = useState('ADMIN');
@@ -24,40 +25,40 @@ export default function Register() {
         if (role === 'ADMIN') {
             try {
                 const res = await registerAdmin(form)
-                navigate('/status/success');
+                goToStatus(navigate, "success");
             } catch (err) {
                 if(err?.response?.status === 500){
-                    navigate('/status/exist');
+                    goToStatus(navigate, "exist");
                     return;
                 }
-                navigate("/status/error")
+                goToStatus(navigate, "errorRegister");
             }
         }
 
         if (role === 'DOCTOR') {
             try {
                 const res = await registerDoctor(payload)
-                navigate('/status/success');
+                goToStatus(navigate, "success");
             } catch (err) {
                 if(err?.response?.status === 500){
-                    navigate('/status/exist');
+                    goToStatus(navigate, "exist");
                     return;
                 }
-                navigate("/status/error")
+                goToStatus(navigate, "errorRegister");
             }
         }
 
         if (role === 'PATIENT') {
             try {
                 const res = await registerPatient(payload)
-                navigate('/status/success');
+                goToStatus(navigate, "success");
             } catch (err) {
                 console.log(err?.response?.status)
                 if(err?.response?.status === 500){
-                    navigate('/status/exist');
+                    goToStatus(navigate, "exist");
                     return;
                 }
-                navigate("/status/error")
+                goToStatus(navigate, "errorRegister");
             }
         }
 

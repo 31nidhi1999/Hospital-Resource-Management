@@ -1,13 +1,8 @@
 import api from "./axios";
 
 export const getAllPatient = async () => {
-    try {
         const response = await api.get("/patients/list");
         return response.data;
-    } catch (error) {
-        console.error("Enable to fetch Patient from System:", error);
-        throw error;
-    }
 }
 
 export const getAllAdmitedlist= async()=>{
@@ -46,13 +41,8 @@ export const getAllDoctor = async () => {
 }
 
 export const scheduleList = async(data)=>{
-    try{
        const res = await  api.get('/schedules/list');
        return res.data;
-    }catch(error){
-        console.error("Failed to fetch schedule:", error);
-        throw error;
-    }
 }
 
 export const scheduleListById = async(id)=>{
@@ -81,13 +71,8 @@ export const getAllAdmission = async()=>{
 }
 
 export const getAllRequest = async()=>{
-    try{
        const res = await  api.get('/requests/list');
        return res.data;
-    }catch(error){
-        console.error("Failed to fetch resource request list:", error);
-        throw error;
-    }
 }
 
 export const getAllTreatment = async()=>{

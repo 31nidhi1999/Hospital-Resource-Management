@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
 import { getAllRequest } from "../../api/List";
 import { approveRequest, rejectRequest } from "../../api/Resource";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function ResourceAllocation() {
     const [requests, setRequest] = useState([]);
+    const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
 
     const loadRequest = async () => {
+        setLoading(true)
         try {
             const list = await getAllRequest();
+            if(!list || list.length === 0){
+                return goToStatus(navigate, "empty"); 
+            }
             setRequest(list);
         } catch (err) {
-            console.error("Error loading resource requests", err);
+            goToStatus(navigate,"error")
+        }finally{
+            setLoading(false);
         }
     };
 
     const handleApprove = async (id) => {
         try {
             await approveRequest(id);
-            loadRequest();  // reload list
+            loadRequest(); 
         } catch (err) {
             alert("Error while approving resource request");
         }
@@ -26,7 +37,7 @@ export default function ResourceAllocation() {
     const handleReject = async (id) => {
         try {
             await rejectRequest(id);
-            loadRequest(); // reload list
+            loadRequest();
         } catch (err) {
             alert("Error while rejecting resource request");
         }
@@ -35,16 +46,12 @@ export default function ResourceAllocation() {
     useEffect(() => {
         loadRequest();
     }, []);
-
+    if(loading) return <FullScreenLoader/>
     return (
         <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-lg">
             <h3 className="text-2xl font-semibold mb-5 text-gray-800">
                 Resource Requests
             </h3>
-
-            {requests.length === 0 && (
-                <p className="text-gray-600">No requests found</p>
-            )}
 
             <div className="overflow-x-auto">
                 <table className="min-w-full border border-gray-300 rounded-lg overflow-hidden">

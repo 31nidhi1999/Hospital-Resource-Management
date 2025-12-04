@@ -2,32 +2,43 @@ import { useEffect, useState } from "react";
 import { getAllActiveAdmitedlist } from "../../api/List";
 import { dischargePatient } from "../../api/Patient";
 import { formatDate } from "../../helper/formateDate";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function DischargePatient() {
-    const [admitedList, setAdmitedList] = useState([]);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [admitedList, setAdmitedList] = useState([]);
 
-    const handleDischarge = async(id)=>{
-        try{
-            const data = await dischargePatient(id);
-        }catch{
-            alert("Error while discharing patient");
-        }
+  const handleDischarge = async(id)=>{
+    try{
+      const data = await dischargePatient(id);
+    }catch{
+      alert("Error while discharing patient");
     }
+  }
 
-    const loadList = async () => {
-        try {
-            const list = await getAllActiveAdmitedlist();
-            setAdmitedList(list);
-        } catch (err) {
-            console.error("Error loading admisiion list", err);
-        }
-    };
+  const loadList = async () => {
+    setLoading(true)
+    try {
+      const list = await getAllActiveAdmitedlist();
+      if (!list || list.length === 0) {
+        return goToStatus(navigate, "empty");
+      }
+      setAdmitedList(list);
+    } catch (err) {
+      goToStatus(navigate, "error")
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        loadList();
-    },[]);
-
-    return (
+  useEffect(() => {
+    loadList();
+  },[]);
+  if (loading) return <FullScreenLoader />
+  return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Patient Discharge</h1>
 

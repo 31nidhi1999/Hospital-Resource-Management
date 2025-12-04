@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { getAllPatient, getAllDoctor } from "../../api/List";
 import { admitPatient } from "../../api/Patient";
 import { UserPlus } from "lucide-react";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function AdmitPatient() {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
     const [paylaod, setPayload] = useState({ patient_id: '', doctor_id: ' ' })
@@ -20,12 +25,18 @@ export default function AdmitPatient() {
     }
 
     const laodPatient = async () => {
+        setLoading(true)
         try {
             const list = await getAllPatient();
+            if (!list || list.length === 0) {
+                return goToStatus(navigate, "empty");
+            }
             setPatients(list);
             console.log(list);
         } catch (err) {
-            console.error("Error loading patients", err);
+            goToStatus(navigate, "error")
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -42,7 +53,7 @@ export default function AdmitPatient() {
         laodDoctor();
         laodPatient();
     }, []);
-
+    if (loading) return <FullScreenLoader />
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
             <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8 border border-indigo-100">

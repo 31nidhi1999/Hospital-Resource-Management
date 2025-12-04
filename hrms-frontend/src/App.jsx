@@ -28,7 +28,8 @@ import DoctorTreatmentList from './pages/doctor/DoctorTreatmentList'
 import PatientAdmittedHistory from './pages/patient/PatinetAdmittedHistory'
 import DoctorAdmittedHistory from './pages/doctor/DoctorAdmittedHistory'
 import AllAdmissionHisory from './pages/admin/AllAdmissionHistory'
-import { ExistedUser, SomethingWentWrong, SuccessUserRegisteredPage } from './utils/Status'
+import StatusPageRoute from './routes/StatusPageRoute';
+import { ExistedUser, SomethingWentWrong, SuccessUserRegisteredPage } from './utils/Status';
 
 function App() {
 
@@ -42,6 +43,8 @@ function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/reset-password" element={<ResetPassword/>}/>
+            <Route path="/status/:page" element={<StatusPageRoute />} />
+
             <Route path="/status/success" element={<SuccessUserRegisteredPage/>}/>
             <Route path="/status/exist" element={<ExistedUser/>}/>
             <Route path="/status/error" element={<SomethingWentWrong/>}/>
