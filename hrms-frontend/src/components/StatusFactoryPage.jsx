@@ -127,6 +127,42 @@ successUpdatePatient: {
   redirectTo: "/patient/dashboard"
 },
 
+otpGenerationFailed: {
+  type: "error",
+  message: "Failed to generate OTP. Please try again.",
+  redirectTo: "/"
+},
+
+otpVerificationFailed: {
+  type: "error",
+  message: "Invalid or expired OTP. Please login again.",
+  redirectTo: "/"
+},
+
+passwordResetSuccess: {
+  type: "success",
+  message: "Password reset successfully!",
+  redirectTo: "/"
+},
+
+passwordResetFailed: {
+  type: "error",
+  message: "Failed to reset password. Please try again.",
+  redirectTo: "/"
+},
+
+userNotFound: {
+  type: "error",
+  message: "User not found in the system.",
+  redirectTo: "/"
+},
+
+mailSendingFailed: {
+  type: "error",
+  message: "Unable to send email. Something went wrong.",
+  redirectTo: "/"
+},
+
 };
 
 export default function StatusPageFactory({ page }) {

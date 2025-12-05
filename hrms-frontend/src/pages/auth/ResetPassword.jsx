@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { resetPassword } from "../../api/password";
 import { useNavigate } from "react-router-dom";
+import { goToStatus } from "../../utils/goToStatus";
 
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -17,13 +18,12 @@ export default function ResetPassword() {
         otpToken
       });
 
-      alert("Password updated successfully");
       localStorage.removeItem("fp_email");
       localStorage.removeItem("fp_token");
 
-      navigate("/login");
+      goToStatus(navigate,"passwordResetSuccess");
     } catch (err) {
-      alert("Failed to reset password");
+      goToStatus(navigate,"passwordResetFailed");
     }
   };
 
