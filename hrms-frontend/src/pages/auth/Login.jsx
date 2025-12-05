@@ -14,7 +14,11 @@ export default function Login() {
         try {
             await login(form)
         } catch (err) {
-            setError(err.message);
+            if(err?.response?.status === 500){
+                setError("Bad credentials");
+                return;
+            }
+            setError("Network Error");
         }
     };
 
