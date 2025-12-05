@@ -97,6 +97,18 @@ existedResource: {
   redirectTo: "/admin/dashboard",
 },
 
+successRequest: {
+  type: "success",
+  message: "Resource request raised successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
+successTreatment: {
+  type: "success",
+  message: "Treatment added successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
 
 
 };

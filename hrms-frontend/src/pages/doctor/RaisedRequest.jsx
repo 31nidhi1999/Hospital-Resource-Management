@@ -16,10 +16,9 @@ export default function RaisedRequest() {
         e.preventDefault();
         try {
             const res = await raisedRequest(paylaod)
-            alert("Resource raised Successfully!");
-            console.log(res)
+            goToStatus(navigate, "successRequest");
         } catch (err) {
-            alert("Error while rasing resource request");
+            goToStatus(navigate, "errorDoctor");
         }
     }
 
