@@ -14,8 +14,9 @@ export default function DischargePatient() {
   const handleDischarge = async(id)=>{
     try{
       const data = await dischargePatient(id);
-    }catch{
-      alert("Error while discharing patient");
+      goToStatus(navigate,"dischargeSucces");
+    }catch (err){
+      goToStatus(navigate,"dischargeaExist");
     }
   }
 
