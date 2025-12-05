@@ -109,7 +109,23 @@ successTreatment: {
   redirectTo: "/doctor/dashboard"
 },
 
+successUpdateAdmin: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/admin/dashboard"
+},
 
+successUpdateDoctor: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
+successUpdatePatient: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/patient/dashboard"
+},
 
 };
 
