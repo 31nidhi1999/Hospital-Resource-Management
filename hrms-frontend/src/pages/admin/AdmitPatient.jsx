@@ -17,10 +17,14 @@ export default function AdmitPatient() {
         e.preventDefault();
         try {
             const res = await admitPatient(paylaod)
-            alert("Patient admitted Successfully!");
-            console.log(res)
+            goToStatus(navigate, "successAdmission")         
         } catch (err) {
-            alert("Error while admiting patient");
+            console.log("STATUS:", err?.response?.status);
+            if(err?.response?.status === 500){
+                goToStatus(navigate, "existedAdmission");
+                return;
+            }
+            goToStatus(navigate, "error")
         }
     }
 

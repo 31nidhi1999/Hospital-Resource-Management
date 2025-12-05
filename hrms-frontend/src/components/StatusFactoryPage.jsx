@@ -59,7 +59,109 @@ const STATUS_CONFIG = {
     type: "error",
     message: "Something Went Wrong",
     redirectTo: "/register",
-  }
+  },
+
+successAdmission: {
+  type: "success",
+  message: "Patient Admitted Successfully!",
+  redirectTo: "/admin/dashboard",
+},
+
+existedAdmission: {
+  type: "exists",
+  message: "Admission Record Already Exists!",
+  redirectTo: "/admin/dashboard",
+},
+
+dischargeaExist: {
+  type: "exists",
+  message: "Discharge Record Already Exists!",
+  redirectTo: "/admin/dashboard",
+},
+
+dischargeSucces: {
+  type: "success",
+  message: "Patient Discharged Successfully!",
+  redirectTo: "/admin/dashboard",
+},
+
+successResource: {
+  type: "success",
+  message: "Resource added successfully!",
+  redirectTo: "/admin/dashboard",
+},
+
+existedResource: {
+  type: "exists",
+  message: "Resource already exists!",
+  redirectTo: "/admin/dashboard",
+},
+
+successRequest: {
+  type: "success",
+  message: "Resource request raised successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
+successTreatment: {
+  type: "success",
+  message: "Treatment added successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
+successUpdateAdmin: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/admin/dashboard"
+},
+
+successUpdateDoctor: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/doctor/dashboard"
+},
+
+successUpdatePatient: {
+  type: "success",
+  message: "User details updated successfully!",
+  redirectTo: "/patient/dashboard"
+},
+
+otpGenerationFailed: {
+  type: "error",
+  message: "Failed to generate OTP. Please try again.",
+  redirectTo: "/"
+},
+
+otpVerificationFailed: {
+  type: "error",
+  message: "Invalid or expired OTP. Please login again.",
+  redirectTo: "/"
+},
+
+passwordResetSuccess: {
+  type: "success",
+  message: "Password reset successfully!",
+  redirectTo: "/"
+},
+
+passwordResetFailed: {
+  type: "error",
+  message: "Failed to reset password. Please try again.",
+  redirectTo: "/"
+},
+
+userNotFound: {
+  type: "error",
+  message: "User not found in the system.",
+  redirectTo: "/"
+},
+
+mailSendingFailed: {
+  type: "error",
+  message: "Unable to send email. Something went wrong.",
+  redirectTo: "/"
+},
 
 };
 

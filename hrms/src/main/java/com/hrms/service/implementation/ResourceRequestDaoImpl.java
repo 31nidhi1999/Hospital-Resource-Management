@@ -63,22 +63,26 @@ public class ResourceRequestDaoImpl implements ResourceRequestDao {
 	public ResourceRequestResDto createRequest(ResourceRequestReqDto dto) {
 		log.info("Creating new resource request for doctor ID: {}", dto.getDoctor_id());
 		
-		Patient patient = patientRepo.findById(dto.getPatient_id())
-				.orElseThrow(()-> new ResourceNotFoundException("Patient not found for ID: " + dto.getPatient_id()));
-		
-		Doctor doctor = doctorRepo.findById(dto.getDoctor_id())
-		.orElseThrow( ()-> new ResourceNotFoundException("Doctor not found for ID: " + dto.getDoctor_id()));
-		
 		Admission admission = admissionRepo.findById(dto.getAdmission_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Admission not found"));
+		
+		if(!admission.getPatient().getId().equals(dto.getPatient_id())) {
+			throw new IllegalArgumentException(
+		            "Patient does not match this admission. Only the patient assigned to this admission can request resources.");
+		}
+		
+		if(!admission.getDoctor().getId().equals(dto.getDoctor_id())) {
+			throw new IllegalArgumentException(
+		            "Doctor does not match this admission. Only the doctor assigned to this admission can request resources.");
+		}
 		
 		Resource resource = resourceRepo.findById(dto.getResource_id())
 							.orElseThrow(()-> new ResourceNotFoundException("Resource not found for ID: " + dto.getResource_id()));	
 		
 		
 		ResourceRequest request = modelMapper.map(dto, ResourceRequest.class);
-		request.setDoctor(doctor);
-		request.setPatient(patient);
+		request.setDoctor(admission.getDoctor());
+		request.setPatient(admission.getPatient());
 		request.setAdmission(admission);
 		request.setResource(resource);
 		request.setStatus(RequestStatus.PENDING);

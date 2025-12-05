@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hrms.custom_exceptions.ResourceNotFoundException;
 import com.hrms.dto.req.ForgetPasswordReq;
 import com.hrms.dto.req.ResetPasswordReq;
 import com.hrms.dto.req.VerifyOtpReq;
@@ -35,7 +36,7 @@ public class ForgetPasswordImpl{
     public ForgetPasswordRes forgotPassword(ForgetPasswordReq req) {
 
         User user = userRepo.findByEmail(req.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         String otp = otpService.generateOtp();
 

@@ -2,8 +2,13 @@ import { useState,useEffect } from "react";
 import { patientDetails } from "../../api/fetchUserDetailById";
 import { updatePatient } from "../../api/UpdateUserDetails";
 import { getLoggedInUserId } from "../auth/auth";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function UpdatePatient({ patient }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     firstName:  "",
     lastName: "",
@@ -20,12 +25,9 @@ export default function UpdatePatient({ patient }) {
     try {
         const id = getLoggedInUserId(); 
         const res = await updatePatient(id,form);
-        console.log("Patient updated successfully:", res);
-    
-        alert("Patient updated successfully!");
-        
+        goToStatus(navigate, "successUpdatePatient");
       } catch (error) {
-          alert("Something went wrong while updating!");
+          goToStatus(navigate, "errorPatient");
       }
   };
 
@@ -36,7 +38,7 @@ export default function UpdatePatient({ patient }) {
           console.log(res)
           setForm(res);
         } catch (error) {
-          console.error("Failed to fetch patient details:", error);
+          goToStatus(navigate, "errorPatient");
         }
       };
     

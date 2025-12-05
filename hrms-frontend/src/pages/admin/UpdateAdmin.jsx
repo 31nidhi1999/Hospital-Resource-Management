@@ -2,8 +2,13 @@ import { useState,useEffect } from "react";
 import { adminDetails } from "../../api/fetchUserDetailById";
 import { updateAdmin } from "../../api/UpdateUserDetails";
 import { getLoggedInUserId } from "../auth/auth";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function UpdateAdmin({ admin }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     firstName: "",
     lastName:  "",
@@ -18,30 +23,29 @@ export default function UpdateAdmin({ admin }) {
     try {
         const id = getLoggedInUserId(); 
         const res = await updateAdmin(id,form);
-        console.log("Admin updated successfully:", res);
-    
-        alert("Admin updated successfully!");
-        
+        goToStatus(navigate, "successUpdateAdmin");
       } catch (error) {
-          alert("Something went wrong while updating!");
+          goToStatus(navigate, "error");
       }
   };
 
   const fetchAdminDetail = async () => {
+      setLoading(true);
       try {
         const id = getLoggedInUserId(); 
         const res = await adminDetails(id);
-        console.log(res)
         setForm(res);
       } catch (error) {
-        console.error("Failed to fetch admin details:", error);
+        goToStatus(navigate, "error");
+      }finally{
+        setLoading(false);
       }
     };
   
     useEffect(()=>{
         fetchAdminDetail();
       },[])
-
+    if(loading) return <FullScreenLoader/>
   return (
     <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
       <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl w-full max-w-md p-8 border border-white/40">

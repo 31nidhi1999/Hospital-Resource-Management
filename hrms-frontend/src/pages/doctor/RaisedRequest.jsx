@@ -16,14 +16,14 @@ export default function RaisedRequest() {
         e.preventDefault();
         try {
             const res = await raisedRequest(paylaod)
-            alert("Resource raised Successfully!");
-            console.log(res)
+            goToStatus(navigate, "successRequest");
         } catch (err) {
-            alert("Error while rasing resource request");
+            goToStatus(navigate, "errorDoctor");
         }
     }
 
     const laodResources = async () => {
+         setLoading(true);
         try {
             const list = await resourceList();
             if (!list || list.length === 0) {
@@ -32,23 +32,29 @@ export default function RaisedRequest() {
             setResources(list);
         } catch (err) {
             goToStatus(navigate, "errorDoctor");
+        }finally{
+            setLoading(false);
         }
     }
 
     const laodAdmission = async () => {
+         setLoading(true);
         try {
             const list = await getAllActiveAdmitedlist();
+            if (!list || list.length === 0) {
+                return goToStatus(navigate, "emptyDoctor");
+            }
             setAdmissions(list);
-            console.log(list);
         } catch (err) {
-            console.error("Error loading doctors", err);
+            goToStatus(navigate, "errorDoctor");
+        }
+        finally{
+            setLoading(false);
         }
     }
     useEffect(() => {
-        setLoading(true)
         laodAdmission();
         laodResources();
-        setLoading(false);
     }, []);
     if(loading) return <FullScreenLoader/>
     return (

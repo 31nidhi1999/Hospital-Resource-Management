@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { addResource } from "../../api/Resource";
 import { CirclePlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { goToStatus } from "../../utils/goToStatus";
 
 
 export default function AddResource() {
+  const navigate = useNavigate();
   const [resource, setResource] = useState({
     resourceName: "",
     resourceType: "",
@@ -21,10 +24,14 @@ export default function AddResource() {
     e.preventDefault();
     try {
       const res = await addResource(resource);
-      alert("Resource Added Successfully!")
+      goToStatus(navigate, "successResource");
       setResource({ resourceName: "", resourceType: "", totalQuantity: "" });
     } catch (error) {
-      alert("Error while adding resource");
+      if(error?.response?.status === 500){
+        goToStatus(navigate, "existedResource");
+        return;
+      }
+      goToStatus(navigate, "error");
     }
   };
 

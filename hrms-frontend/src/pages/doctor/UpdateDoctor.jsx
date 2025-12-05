@@ -2,8 +2,13 @@ import { useEffect, useState } from "react";
 import { updateDoctor } from "../../api/UpdateUserDetails";
 import { doctorDetails } from "../../api/fetchUserDetailById";
 import { getLoggedInUserId } from "../auth/auth";
+import { goToStatus } from "../../utils/goToStatus";
+import { useNavigate } from "react-router-dom";
+import FullScreenLoader from "../../utils/FullScreenLoader";
 
 export default function UpdateDoctor({ doctor }) {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
   firstName: "",
   lastName: "",
@@ -21,25 +26,24 @@ export default function UpdateDoctor({ doctor }) {
   try {
      const id = getLoggedInUserId();
     const res = await updateDoctor(id,form);
-    console.log("Doctor updated successfully:", res);
-
-    alert("Doctor updated successfully!");
-    
+    goToStatus(navigate, "successUpdateDoctor");
   } catch (error) {
-      alert("Something went wrong while updating!");
+      goToStatus(navigate, "errorDoctor");
   }
 };
 
 
   const fetchDoctorDetail = async () => {
+    setLoading(true);
     try {
       const id = getLoggedInUserId();
       const res = await doctorDetails(id);
-      console.log(res)
       setForm(res);
     } catch (error) {
-      console.error("Failed to fetch doctor details:", error);
-    }
+      goToStatus(navigate, "errorDoctor");
+      }finally{
+        setLoading(false);
+      }
   };
 
   useEffect(()=>{

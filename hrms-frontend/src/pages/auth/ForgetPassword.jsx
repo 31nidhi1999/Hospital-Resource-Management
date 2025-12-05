@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendOtp,verifyOtp} from "../../api/password";
 import { useNavigate } from "react-router-dom";
+import { goToStatus } from "../../utils/goToStatus";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -12,18 +13,18 @@ export default function ForgotPassword() {
     try {
         console.log(email);
       const res = await sendOtp({email});
+      alert("OTP has been sent to your registered email address.");
 
-      if (!res || !res.otpToken) {
-      alert("OTP generation failed. Try again.");
-      return; 
-    }
       localStorage.setItem("fp_email", email);
       localStorage.setItem("fp_token", res.otpToken);
 
       setShowOtp(true);
     } catch (err) {
-      alert("Failed to generate OTP");
-      return;
+      if(err?.response?.status === 500){
+        goToStatus(navigate,"mailSendingFailed");
+        return;
+      }
+      goToStatus(navigate,"userNotFound");
     }
   };
 
@@ -49,8 +50,7 @@ export default function ForgotPassword() {
 
       navigate("/reset-password");
     } catch (err) {
-      alert("OTP verification failed");
-      navigate("/login")
+      goToStatus(navigate,"otpVerificationFailed");
     }
   };
 

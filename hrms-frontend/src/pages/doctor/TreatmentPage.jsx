@@ -27,7 +27,7 @@ export default function TreatmentPage() {
         if (!list || list.length === 0) {
           return goToStatus(navigate, "emptyDoctor");
         }
-        setPatients(res);
+        setPatients(list);
       } catch (err) {
         goToStatus(navigate, "errorDoctor")
       } finally {
@@ -46,10 +46,9 @@ export default function TreatmentPage() {
     e.preventDefault();
     try {
       const res = await createTreatmnet(form);
-      alert("Treatment added successfully!");
-      navigate("/doctor/dashboard")
+      goToStatus(navigate, "successTreatment")
     } catch (err) {
-      console.error(err);
+      goToStatus(navigate, "errorDoctor")
     }
   };
   if (loading) return <FullScreenLoader />
