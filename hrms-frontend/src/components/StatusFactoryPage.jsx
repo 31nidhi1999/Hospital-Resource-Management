@@ -61,18 +61,6 @@ const STATUS_CONFIG = {
     redirectTo: "/register",
   },
 
-  successResource: {
-  type: "success",
-  message: "Resource Request Approved Successfully!",
-  redirectTo: "/admin/dashboard",
-},
-
-existedResource: {
-  type: "exists",
-  message: "Resource Request Already Exists!",
-  redirectTo: "/admin/dashboard",
-},
-
 successAdmission: {
   type: "success",
   message: "Patient Admitted Successfully!",
@@ -94,6 +82,18 @@ dischargeaExist: {
 dischargeSucces: {
   type: "success",
   message: "Patient Discharged Successfully!",
+  redirectTo: "/admin/dashboard",
+},
+
+successResource: {
+  type: "success",
+  message: "Resource added successfully!",
+  redirectTo: "/admin/dashboard",
+},
+
+existedResource: {
+  type: "exists",
+  message: "Resource already exists!",
   redirectTo: "/admin/dashboard",
 },
 
